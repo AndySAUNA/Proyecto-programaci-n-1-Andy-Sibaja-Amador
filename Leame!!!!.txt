@@ -1,0 +1,3 @@
+para el día 11 de septiembre por fin logre usar git y GitHub, y solo he hecho una version en consola para las operaciones de matrices
+de aqui tengo que hacer un proyecto nuevo para la entrega, entonces aunque ya envié el enlace para este repositorio, aun no esta terminado.
+ 
