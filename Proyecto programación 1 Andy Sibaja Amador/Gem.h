@@ -5,13 +5,15 @@ using namespace std;
 
 class Gem {
 private:
-	int postionx, postiony;
+	int positionx, positiony;
 	int gemtype;
 public:
 	Gem(int positionx, int positiony) {
-		this->postionx = positionx;
-		this->postiony = positiony;
+		this->positionx = positionx;
+		this->positiony = positiony;
 		gemtype = rand() % 5;
 	}
-	int setpositionx();
+	int setpositionx(int positionx) { this->positionx = positionx; }
+	int setpositiony(int positiony) { this->positiony = positiony; }
+
 };
