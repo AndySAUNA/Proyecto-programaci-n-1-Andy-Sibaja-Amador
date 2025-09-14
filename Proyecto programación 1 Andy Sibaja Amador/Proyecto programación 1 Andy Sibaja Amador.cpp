@@ -5,6 +5,7 @@ using namespace sf;
 using namespace std;
 #include <iostream>
 #include "Gem.h"
+#include "Gameboard.h"
 
 int main()
 {
@@ -15,8 +16,17 @@ int main()
     rect.setFillColor(test);
     rect.setOutlineColor(Color::Black);
 	rect.setOutlineThickness(5.f);
-
-    Gem gem1(0,0);
+	Gameboard board(window);
+	board.randomizegameboard();
+	Gem** sboard = board.getboard();
+	bool** solutionf = board.detectmatches(sboard);
+    for (int i = 0; i < 8; i++) {
+        cout << endl;
+        for (int j = 0; j < 8; j++) {
+            if (solutionf[i][j] == true) { cout << "(t)" << "\t"; }
+            if (solutionf[i][j] == false) { cout << "f" << "\t"; }
+        }
+    }
 
     while (window.isOpen())
     {
@@ -44,7 +54,7 @@ int main()
                 window.draw(rect);
             }
         }
-        gem1.draw(window, 0, 0);
+		board.drawgameboard();
         window.display();
     }
 
