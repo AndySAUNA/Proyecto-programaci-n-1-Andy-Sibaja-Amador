@@ -10,6 +10,7 @@ class Gameboard {
 private:
 	RenderWindow* window;
 	Gem** board;
+	int sx1, sy1, sx2, sy2;
 public:
 	Gameboard(RenderWindow &window) {
 		srand((unsigned)time(0));
@@ -28,14 +29,25 @@ public:
 			}
 		}
 		randomizegameboard();
+		sx1 = 9; 
+		sy1 = 9; 
+		sx2 = 9;
+		sy2 = 9;
 	}
 	//this function draws the gameboard on the window
 	void drawgameboard() {
+		//make a aquamarine background squares for grid
 		RectangleShape rect(Vector2f(75.f, 75.f));
 		Color test(127, 255, 212);
 		rect.setFillColor(test);
 		rect.setOutlineColor(Color::Black);
 		rect.setOutlineThickness(5.f);
+		//make a red background squares for grid
+		RectangleShape rect2(Vector2f(75.f, 75.f));
+		rect2.setFillColor(Color::Red);
+		rect2.setOutlineColor(Color::Black);
+		rect2.setOutlineThickness(5.f);
+
 		//ment to draw a 8x8 grid of squares on the right side of the window
 		for (float i = 0; i < 8; i++) {
 			for (float j = 0; j < 8; j++) {
@@ -48,6 +60,24 @@ public:
 				board[i][j].draw();
 			}
 		}
+		//this draws selected squares on the grid
+		if (sx1 != 9 && sy1 != 9 && sx2 != 9 && sy2 != 9) {
+			rect2.setPosition(Vector2f((sx1 * 75.f + 200.f), (sy2 * 75.f)));
+			rect2.setPosition(Vector2f((sx1 * 75.f + 200.f), (sy2 * 75.f)));
+		}
+	}
+	//this function sets the coordinates of the first and second selection
+	void setxy12(int x1, int y1, int x2, int y2) {
+		sx1 = x1;
+		sy1 = y1;
+		sx2 = x2;
+		sy2 = y2;
+	}
+	void resetxy12() {
+		sx1 = 9;
+		sy1 = 9;
+		sx2 = 9;
+		sy2 = 9;
 	}
 	// this function randomizes the gem types on the board
 	void randomizegameboard() {
