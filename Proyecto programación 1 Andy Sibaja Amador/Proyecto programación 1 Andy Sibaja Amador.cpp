@@ -10,12 +10,7 @@ using namespace std;
 int main()
 {
     RenderWindow window(VideoMode(800, 600), "Proyecto programación 1 Andy Sibaja");
-    window.setFramerateLimit(60);
-    RectangleShape rect(Vector2f(75.f, 75.f));
-    Color test(127, 255, 212);
-    rect.setFillColor(test);
-    rect.setOutlineColor(Color::Black);
-	rect.setOutlineThickness(5.f);
+    window.setFramerateLimit(1);
 	Gameboard board(window);
 	board.randomizegameboard();
 	Gem** sboard = board.getboard();
@@ -47,14 +42,9 @@ int main()
         }
 
         window.clear();
-        //ment to draw a 8x8 grid of squares on the right side of the window
-        for (float i = 0; i < 8; i++) {
-            for (float j = 0; j < 8; j++) {
-                rect.setPosition(Vector2f((i*75.f + 200.f), (j*75.f)));
-                window.draw(rect);
-            }
-        }
 		board.drawgameboard();
+		board.deletematches();
+        board.drawgameboard();
         window.display();
     }
 
