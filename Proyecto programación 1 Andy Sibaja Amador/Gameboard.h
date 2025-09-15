@@ -27,6 +27,7 @@ public:
 				board[i][j].setwindow(window);
 			}
 		}
+		randomizegameboard();
 	}
 	//this function draws the gameboard on the window
 	void drawgameboard() {
@@ -66,6 +67,10 @@ public:
 					}
 				}
 			}
+			for (i = 0; i < 8; i++) {
+				delete[] fakeboard[i];
+			}
+			delete[] fakeboard;
 			fakeboard = detectmatches(board);
 		}
 
@@ -152,7 +157,6 @@ public:
 						board[i][j].setgemtype(board[i - 1][j].getgemtype());
 						board[i - 1][j].setgemtype(0);
 						clean = false;// clean is false because a entry north is now equal to 0
-						drawgameboard();//this draws the gameboard as a move happens, o we can see the gravity effect
 					}
 				}
 			}
@@ -165,8 +169,38 @@ public:
 		if (x1 == (1, 2, 3, 4, 5, 6, 7, 8) && y1 == (1, 2, 3, 4, 5, 6, 7, 8) && x2 == (1, 2, 3, 4, 5, 6, 7, 8) && y2 == (1, 2, 3, 4, 5, 6, 7, 8)) {
 			if ((x1 == x2 + 1 || x1 == x2 - 1)&&(y1==y2) || ((y1 == y2 + 1 || y1 == y2 - 1) && (x1==x2))) {
 				if ((board[x1][y1].getgemtype()) != (board[x2][y2].getgemtype())) {
-
-					return true;
+					Gem** temp = board;
+					int t1, t2;
+					t1 = temp[x1][y1].getgemtype();
+					t2 = temp[x2][y2].getgemtype();
+					temp[x1][y1].setgemtype(t2);
+					temp[x2][y2].setgemtype(t1);
+					bool** fakeboard = detectmatches(temp);
+					if (countmatches(fakeboard) > 0) {
+						t1 = board[x1][y1].getgemtype();
+						t2 = board[x2][y2].getgemtype();
+						board[x1][y1].setgemtype(t2);
+						board[x2][y2].setgemtype(t1);
+						for (int i = 0; i < 8; i++) {
+							delete[] fakeboard[i];
+						}
+						delete[] fakeboard;
+						for (int i = 0; i < 8; i++) {
+							delete[] temp[i];
+						}
+						delete[] temp;
+						return true;
+					}
+					else { 
+						for (int i = 0; i < 8; i++) {
+							delete[] fakeboard[i];
+						}
+						delete[] fakeboard;
+						for (int i = 0; i < 8; i++) {
+							delete[] temp[i];
+						}
+						delete[] temp;
+						return false; }
 				}
 				else { return false; }
 			}
