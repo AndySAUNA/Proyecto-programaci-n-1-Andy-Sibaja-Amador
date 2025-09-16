@@ -27,22 +27,9 @@ int main()
             if (event.type == Event::Closed)
                 window.close();
         }
-
-        //if (event.type == Event::MouseButtonPressed)
-        //{
-        //    if (event.mouseButton.button == sf::Mouse::Left)
-        //    {
-				
-        //        std::cout << "the left button was pressed" << std::endl;
-        //        std::cout << "mouse x: " << event.mouseButton.x << std::endl;
-        //        std::cout << "mouse y: " << event.mouseButton.y << std::endl;
-        //        //x = event.mouseButton.x;
-        //        //y = event.mouseButton.y;
-        //    }
-        //}
         if (event.type == sf::Event::MouseButtonPressed)
         {
-            if (event.mouseButton.button == sf::Mouse::Left) // Check for left mouse button
+            if (event.mouseButton.button == sf::Mouse::Left)
             {
                 mouseButtonPressed = true;
             }
@@ -61,6 +48,7 @@ int main()
                     sx = (x - 200) / 75;
                     sy = y / 75;
                     cout << "posxy is:" << sx + 1 << "," << sy + 1 << endl;
+                    game.select(sx, sy);
                 }
                 mouseButtonPressed = false; // Reset the flag
 

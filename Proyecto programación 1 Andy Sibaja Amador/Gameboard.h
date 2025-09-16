@@ -35,6 +35,7 @@ public:
 		sy2 = 9;
 	}
 	//this function draws the gameboard on the window
+	
 	void drawgameboard() {
 		//make a aquamarine background squares for grid
 		RectangleShape rect(Vector2f(75.f, 75.f));
@@ -43,7 +44,7 @@ public:
 		rect.setOutlineColor(Color::Black);
 		rect.setOutlineThickness(5.f);
 		//make a red background squares for grid
-		RectangleShape rect2(Vector2f(75.f, 75.f));
+		RectangleShape rect2(Vector2f(70.f, 70.f));
 		rect2.setFillColor(Color::Red);
 		rect2.setOutlineColor(Color::Black);
 		rect2.setOutlineThickness(5.f);
@@ -55,16 +56,22 @@ public:
 				window->draw(rect);
 			}
 		}
+		if (sx1 != 9 && sy1 != 9) {
+			rect2.setPosition(Vector2f((sx1 * 75.f + 200.f), (sy1 * 75.f)));
+			window->draw(rect2);
+		}
+		if (sx1 != 9 && sy1 != 9 && sx2 != 9 && sy2 != 9) {
+			rect2.setPosition(Vector2f((sx1 * 75.f + 200.f), (sy1 * 75.f)));
+			window->draw(rect2);
+			rect2.setPosition(Vector2f((sx2 * 75.f + 200.f), (sy2 * 75.f)));
+			window->draw(rect2);
+		}
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				board[i][j].draw();
 			}
 		}
-		//this draws selected squares on the grid
-		if (sx1 != 9 && sy1 != 9 && sx2 != 9 && sy2 != 9) {
-			rect2.setPosition(Vector2f((sx1 * 75.f + 200.f), (sy2 * 75.f)));
-			rect2.setPosition(Vector2f((sx1 * 75.f + 200.f), (sy2 * 75.f)));
-		}
+		
 	}
 	//this function sets the coordinates of the first and second selection
 	void setxy12(int x1, int y1, int x2, int y2) {
@@ -72,6 +79,10 @@ public:
 		sy1 = y1;
 		sx2 = x2;
 		sy2 = y2;
+	}
+	void setxy1(int x, int y) {
+		sx1 = x;
+		sy1 = y;
 	}
 	void resetxy12() {
 		sx1 = 9;
@@ -194,43 +205,26 @@ public:
 	
 			if (clean == true) {  }// if a pass shows that there wasn't a single coodrinate with a 0, then it is clean and the operation can stop
 	}
+	bool checkadyasent(int x1, int y1, int x2, int y2) {
+		if ((x1 == x2 + 1 || x1 == x2 - 1) && (y1 == y2) || ((y1 == y2 + 1 || y1 == y2 - 1) && (x1 == x2))) {
+			return true;
+		}
+		else { return false; }
+	}
 	//this function checks valid move and returns true or false
-	bool checkvalidmove(int x1, int y1, int x2, int y2, Gem** board) {
-		if (x1 == (1, 2, 3, 4, 5, 6, 7, 8) && y1 == (1, 2, 3, 4, 5, 6, 7, 8) && x2 == (1, 2, 3, 4, 5, 6, 7, 8) && y2 == (1, 2, 3, 4, 5, 6, 7, 8)) {
+	bool checkvalidmove1(int x1, int y1, int x2, int y2) {
+
+		cout << "valid move test 0" << endl;
+		if (x1 >= 0 && x1 <= 7 && y1 >= 0 && y1 <= 7 && x2 >= 0 && x2 <= 7 && y2 >= 0 && y2 <= 7) {
+			cout << "valid move test 1" << endl;
 			if ((x1 == x2 + 1 || x1 == x2 - 1)&&(y1==y2) || ((y1 == y2 + 1 || y1 == y2 - 1) && (x1==x2))) {
-				if ((board[x1][y1].getgemtype()) != (board[x2][y2].getgemtype())) {
-					Gem** temp = board;
-					int t1, t2;
-					t1 = temp[x1][y1].getgemtype();
-					t2 = temp[x2][y2].getgemtype();
-					temp[x1][y1].setgemtype(t2);
-					temp[x2][y2].setgemtype(t1);
-					bool** fakeboard = detectmatches(temp);
-					if (countmatches(fakeboard) > 0) {
-						t1 = board[x1][y1].getgemtype();
-						t2 = board[x2][y2].getgemtype();
-						board[x1][y1].setgemtype(t2);
-						board[x2][y2].setgemtype(t1);
-						for (int i = 0; i < 8; i++) {
-							delete[] fakeboard[i];
-						}
-						delete[] fakeboard;
-						for (int i = 0; i < 8; i++) {
-							delete[] temp[i];
-						}
-						delete[] temp;
-						return true;
-					}
-					else { 
-						for (int i = 0; i < 8; i++) {
-							delete[] fakeboard[i];
-						}
-						delete[] fakeboard;
-						for (int i = 0; i < 8; i++) {
-							delete[] temp[i];
-						}
-						delete[] temp;
-						return false; }
+				cout << "valid move test 2" << endl;
+				cout << "x1,y1: " << x1 << "," << y1 << " x2,y2: " << x2 << "," << y2 << endl;
+				cout << "gem 1 is: " << board[x1][y1].getgemtype() << "gem 2 is: " << board[x2][y2].getgemtype() << endl;
+				if (board[x1][y1].getgemtype() != board[x2][y2].getgemtype()) {
+					cout << "valid move test 3" << endl;
+					cout << "valid move" << endl;
+					return true;
 				}
 				else { return false; }
 			}
@@ -238,8 +232,52 @@ public:
 		}
 		else { return false; }
 	}
+	bool checkvalidmove2() {
+		//make a temp board to test the swap on
+		Gem** temp = board;
+		//this part swaps the gems in the temp board
+		int t1, t2;
+		t1 = temp[sx1][sy1].getgemtype();
+		t2 = temp[sx2][sy2].getgemtype();
+		temp[sx1][sy1].setgemtype(t2);
+		temp[sx2][sy2].setgemtype(t1);
+		//this part checks if the swap creates a match
+		bool** fakeboard = detectmatches(temp);
+		if (countmatches(fakeboard) > 0) {
+			//if a match is found, swap the real board and delete the temp and fakeboard and return true
+			t1 = board[sx1][sy1].getgemtype();
+			t2 = board[sx2][sy2].getgemtype();
+			board[sx1][sy1].setgemtype(t2);
+			board[sx2][sy2].setgemtype(t1);
+			for (int i = 0; i < 8; i++) {
+				delete[] fakeboard[i];
+				delete[] temp[i];
+			}
+			delete[] fakeboard;
+			delete[] temp;
+			return true;
+		}
+		else {//if no match is found, just delete the temp and fakeboard and retrn false
+			for (int i = 0; i < 8; i++) {
+				delete[] fakeboard[i];
+				delete[] temp[i];
+			}
+			delete[] fakeboard;
+			delete[] temp;
+		}
+	}
 	void deletegem(int x, int y) {
 		board[x][y].setgemtype(0);
+	}
+	void conprintboard() {
+		int i, j;
+		for (i = 0; i < 8; i++) {
+			cout << "Row " << i << ": \t";
+			for (j = 0; j < 8; j++) {
+				std::cout << board[i][j].getgemtype() << "\t";
+			}
+			std::cout << std::endl;
+		}
 	}
 	//destructor
 	~Gameboard() {
