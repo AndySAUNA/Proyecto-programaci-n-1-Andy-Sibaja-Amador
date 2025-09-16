@@ -138,6 +138,9 @@
     <ClInclude Include="Gameboard.h" />
     <ClInclude Include="Gem.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\fonts\OpenSans-Regular.ttf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

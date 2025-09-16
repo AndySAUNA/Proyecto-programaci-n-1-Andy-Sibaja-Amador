@@ -1,7 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <string>
 #include "Gameboard.h"
+using namespace sf;
+using namespace std;
 
 class Game {
 private:
@@ -12,6 +15,7 @@ private:
 	bool selector;
 	int selx;
 	int sely;
+	Font font;
 public:
 	Game(RenderWindow &window) {
 		int selx = 9;
@@ -22,13 +26,31 @@ public:
 		gboard = new Gameboard(window);
 		gboard->randomizegameboard();
 		selector = false;
+		font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
 	}
+	// draws score and moves
 	void drawstats() {
-		//to be implemented
+		//prints score
+		Text text1;
+		text1.setFont(font);
+		text1.setString("Score: " + to_string(score));
+		text1.setCharacterSize(24);
+		text1.setFillColor(Color::White);
+		text1.setPosition(40.f, 10.f);
+		window->draw(text1);
+
+		Text text2;
+		text2.setFont(font);
+		text2.setString("Moves: " + to_string(moves));
+		text2.setCharacterSize(24);
+		text2.setFillColor(Color::White);
+		text2.setPosition(40.f, 40.f);
+		window->draw(text2);
 	}
+	// game loop
 	void drawgame() {
-		gboard->drawgameboard();
 		drawstats();
+		gboard->drawgameboard();
 	}
 	void buttonpressed(){
 		bool mouseButtonPressed = false;

@@ -17,6 +17,7 @@ int main()
 
 	Gameboard board(window);
 	board.randomizegameboard();
+	Game game(window);
 
     while (window.isOpen())
     {
@@ -67,7 +68,7 @@ int main()
         }
 
         window.clear();
-		board.drawgameboard();
+		game.drawgame();
         window.display();
     }
 
