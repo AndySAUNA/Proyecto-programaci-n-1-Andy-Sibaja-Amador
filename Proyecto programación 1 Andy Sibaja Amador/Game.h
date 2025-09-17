@@ -80,10 +80,8 @@ public:
 				firstselect = true;
 				if (gboard->checkvalidmove2() == true) { // this bit checks if the move creates a match and processes the move if it does
 					cout << "gboard->checkvalidmove2() check passed"; 
-					score += gboard->countmatches(gboard->detectmatches(gboard->getboard()));
+					score += gboard->gemdestroyer();
 					moves--;
-					//gboard->gravity();
-					cout << "gravity applied, deselected" << endl;
 					selrow = 9;
 					selcolumn = 9;
 					firstselect = true;

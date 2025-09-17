@@ -192,7 +192,6 @@ public:
 	}
 	//this function does the gravity effect
 	void gravity() {
-		this_thread::sleep_for(chrono::milliseconds(500));
 		srand((unsigned)time(0));
 		int i, j, f, t;
 		bool clean;
@@ -200,7 +199,11 @@ public:
 		for (t = 0; t < 8; t++) {//to repass matrix 8 times to ensure all gems are active
 			clean = true;//on the start of a new run on the matrix it is assumed clean until proven otherwise
 			for (f = 0; f < 8; f++) {//makes sure top row has active gems
-				if (board[0][f].getgemtype() == 0) { board[0][f].setgemtype((rand() % 5) + 1); }
+				if (board[0][f].getgemtype() == 0) {
+					board[0][f].setgemtype((rand() % 5) + 1);
+					drawgameboard();
+				}
+				
 			}
 			for (i = 0; i < 8; i++) {//for every row of the matrix
 				for (j = 0; j < 8; j++) {//for every column of the matrix
@@ -209,13 +212,22 @@ public:
 						board[i - 1][j].setgemtype(0);
 						clean = false;// clean is false because a entry north is now equal to 0
 						drawgameboard();
-						this_thread::sleep_for(chrono::milliseconds(500));
+						sleep(milliseconds(100));
 					}
 				}
 			}
 		}
 
 		if (clean == true) {}// if a pass shows that there wasn't a single coodrinate with a 0, then it is clean and the operation can stop
+	}
+	int gemdestroyer() {
+		int destroyedgems = 0;
+		destroyedgems += countmatches(detectmatches(board));
+		while (deletematches() == true) {
+			destroyedgems += countmatches(detectmatches(board));
+			gravity();
+		}
+		return destroyedgems;
 	}
 	bool checkadyasent(int x1, int y1, int x2, int y2) {
 		if ((x1 == x2 + 1 || x1 == x2 - 1) && (y1 == y2) || ((y1 == y2 + 1 || y1 == y2 - 1) && (x1 == x2))) {
@@ -270,7 +282,7 @@ public:
 		cout << "ogfakeboard is: " << endl;
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				cout << ogfakeboard[j][i] << "\t";
+				cout << ogfakeboard[i][j] << "\t";
 			}
 			cout << endl;
 		}
@@ -284,7 +296,7 @@ public:
 		cout << "fakeboard is: " << endl;
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				cout << fakeboard[j][i] << "\t";
+				cout << fakeboard[i][j] << "\t";
 			}
 			cout << endl;
 		}
