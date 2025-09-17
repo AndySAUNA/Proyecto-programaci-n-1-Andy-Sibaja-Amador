@@ -82,7 +82,20 @@ public:
 				selx = 9;
 				sely = 9;
 				firstselect = true;
-
+				if (gboard->checkvalidmove2() == true) { // this bit checks if the move creates a match and processes the move if it does
+					cout << "gboard->checkvalidmove2() check passed"; 
+					score += gboard->countmatches(gboard->detectmatches(gboard->getboard()));
+					moves--;
+					//gboard->gravity();
+				}
+				else { // this bit resets the selection if the move is invalid
+					cout << "gboard->checkvalidmove2() check failed" << endl; 
+					cout << "deselected" << endl;
+					selx = 9;
+					sely = 9;
+					firstselect = true;
+					gboard->resetxy12();
+				}
 				//if (gboard->checkvalidmove2() == true) { // this checks if the move creates a match and processes the move if it does
 
 				//	score += gboard->countmatches(gboard->detectmatches(gboard->getboard()));
@@ -112,24 +125,6 @@ public:
 		}
 		
 	}
-	void select2() {
-
-	}
-	//void playmove() {
-	//	//to be implemented
-	//	int x1, y1, x2, y2;
-	//	x1 = 0; y1 = 0; x2 = 0; y2 = 0;
-	//	//mous detections to be implemented
-	//	
-	//	if (gboard->checkvalidmove1(x1, y1, x2, y2, gboard->getboard()) == true) {
-	//		while (gboard->deletematches() == true) {
-
-	//		}
-	//		moves--;
-	//	}
-	//	else {
-
-	//	}
 	//destructor
 	~Game() {
 		delete gboard;

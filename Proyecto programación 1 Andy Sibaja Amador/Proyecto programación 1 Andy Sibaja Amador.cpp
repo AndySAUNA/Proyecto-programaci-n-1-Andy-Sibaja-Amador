@@ -47,7 +47,7 @@ int main()
                 if (x>200){
                     sx = (x - 200) / 75;
                     sy = y / 75;
-                    cout << "posxy is:" << sx + 1 << "," << sy + 1 << endl;
+                    cout << "posxy is:" << sx << "," << sy << endl;
                     game.select(sx, sy);
                 }
                 mouseButtonPressed = false; // Reset the flag
@@ -64,4 +64,4 @@ int main()
 }
 
 //delay function for debugging
-//std::this_thread::sleep_for(std::chrono::milliseconds(500));
+//std::this_thread::sleep_for(chrono::milliseconds(500));
