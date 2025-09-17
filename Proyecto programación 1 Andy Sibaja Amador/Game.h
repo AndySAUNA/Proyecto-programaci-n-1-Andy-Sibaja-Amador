@@ -33,7 +33,7 @@ public:
 		//prints score
 		Text text1;
 		text1.setFont(font);
-		text1.setString("Score: " + to_string(score));
+		text1.setString("Score: " + to_string(score * 10));
 		text1.setCharacterSize(24);
 		text1.setFillColor(Color::White);
 		text1.setPosition(40.f, 10.f);
@@ -80,7 +80,7 @@ public:
 				firstselect = true;
 				if (gboard->checkvalidmove2() == true) { // this bit checks if the move creates a match and processes the move if it does
 					cout << "gboard->checkvalidmove2() check passed"; 
-					score += gboard->gemdestroyer();
+					score += gemdestroyer();
 					moves--;
 					selrow = 9;
 					selcolumn = 9;
@@ -115,6 +115,21 @@ public:
 			}
 		}
 		
+	}
+	int gemdestroyer() {
+
+		int destroyedgems = 0, mincounter = 0;
+		destroyedgems += gboard->countmatches(gboard->detectmatches(gboard->getboard()));
+		while (gboard->deletematches()==true) {
+				window->clear();
+				gboard->drawgameboard();
+				gboard->gravity();
+				destroyedgems += gboard->countmatches(gboard->detectmatches(gboard->getboard()));
+				drawstats();
+				window->display();
+				this_thread::sleep_for(chrono::milliseconds(500));
+		}
+		return destroyedgems;
 	}
 	//destructor
 	~Game() {

@@ -44,7 +44,6 @@ public:
 		
 	}
 	//this function draws the gameboard on the window
-
 	void drawgameboard() {
 		//make a aquamarine background squares for grid
 		RectangleShape rect(Vector2f(75.f, 75.f));
@@ -65,23 +64,27 @@ public:
 				window->draw(rect);
 			}
 		}
+		//draws red square around selected gem
 		if (row1 != 9 && column1 != 9) {
-			rect2.setPosition(Vector2f((column1 * 75.f + 200.f), (row1 * 75.f)));
-			window->draw(rect2);
+			lightup(row1, column1);
+			//rect2.setPosition(Vector2f((column1 * 75.f + 200.f), (row1 * 75.f)));
+			//window->draw(rect2);
 		}
 		if (row1 != 9 && column1 != 9 && row2 != 9 && column2 != 9) {
-			rect2.setPosition(Vector2f((column1 * 75.f + 200.f), (row1 * 75.f)));
-			window->draw(rect2);
-			rect2.setPosition(Vector2f((column2 * 75.f + 200.f), (row2 * 75.f)));
-			window->draw(rect2);
-		}
+			lightup(row1, column1);
+			lightup(row2, column2);
+			//rect2.setPosition(Vector2f((column1 * 75.f + 200.f), (row1 * 75.f)));
+			//window->draw(rect2);
+			//rect2.setPosition(Vector2f((column2 * 75.f + 200.f), (row2 * 75.f)));
+			//window->draw(rect2);
 
+		}
+		//draws the gems on the board
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				board[i][j].draw();
 			}
 		}
-
 	}
 	//this function sets the coordinates of the first and second selection
 	void setxy12(int row1, int column1, int row2, int column2) {
@@ -161,13 +164,23 @@ public:
 	bool deletematches() {
 		bool** fakeboard = detectmatches(board);
 		int i, j;
+		resetxy12();
 		bool matchesfound = false;
+		for (i = 0; i < 8; i++) {
+			for (j = 0; j < 8; j++) {
+				if (fakeboard[i][j] == true) {
+					lightup(i, j);
+					board[i][j].draw();
+				}
+			}
+		}
+		window->display();
+		this_thread::sleep_for(chrono::milliseconds(500));
 		for (i = 0; i < 8; i++) {
 			for (j = 0; j < 8; j++) {
 				if (fakeboard[i][j] == true) {
 					board[i][j].setgemtype(0);
 					matchesfound = true;
-					drawgameboard();
 				}
 			}
 		}
@@ -191,20 +204,30 @@ public:
 		return board;
 	}
 	//this function does the gravity effect
+	void lightup(int row, int column) {
+		RectangleShape shape(Vector2f(70.f, 70.f));
+		shape.setFillColor(Color::Red);
+		shape.setOutlineColor(Color::Black);
+		shape.setOutlineThickness(5.f);
+		shape.setPosition(Vector2f((column * 75.f + 200.f), (row * 75.f)));
+		window->draw(shape);
+	}
 	void gravity() {
 		srand((unsigned)time(0));
-		int i, j, f, t;
+		int i, j, f,t;
 		bool clean;
-
-		for (t = 0; t < 8; t++) {//to repass matrix 8 times to ensure all gems are active
+		for (t = 0; t < 8; t++) {//runs the gravity operation 8 times to make sure all gems have fallen to the bottom
 			clean = true;//on the start of a new run on the matrix it is assumed clean until proven otherwise
 			for (f = 0; f < 8; f++) {//makes sure top row has active gems
 				if (board[0][f].getgemtype() == 0) {
 					board[0][f].setgemtype((rand() % 5) + 1);
 					drawgameboard();
+					window->display();
+					this_thread::sleep_for(chrono::milliseconds(500));
 				}
-				
 			}
+			
+
 			for (i = 0; i < 8; i++) {//for every row of the matrix
 				for (j = 0; j < 8; j++) {//for every column of the matrix
 					if (board[i][j].getgemtype() == 0 && i > 0) {//if entry is equal to 0 and isn't the top row, replace it with the entry of one row higher and eliminate the higher row entry
@@ -212,22 +235,24 @@ public:
 						board[i - 1][j].setgemtype(0);
 						clean = false;// clean is false because a entry north is now equal to 0
 						drawgameboard();
-						sleep(milliseconds(100));
+						window->display();
+						this_thread::sleep_for(chrono::milliseconds(500));
 					}
 				}
 			}
 		}
-
 		if (clean == true) {}// if a pass shows that there wasn't a single coodrinate with a 0, then it is clean and the operation can stop
 	}
-	int gemdestroyer() {
-		int destroyedgems = 0;
-		destroyedgems += countmatches(detectmatches(board));
-		while (deletematches() == true) {
-			destroyedgems += countmatches(detectmatches(board));
-			gravity();
+	bool gravitybrake() {
+		int i, j;
+		bool clean;
+		for (i = 0; i < 8; i++) {//for every column of the first row of the matrix
+			clean = true;//on the start of a new run on the matrix it is assumed clean until proven otherwise
+			if (board[0][i].getgemtype() == 0) {//if entry is equal to 0 and isn't the top row, return false
+				clean = false;
+			}
 		}
-		return destroyedgems;
+		return clean;//will give true if top row is full, false if not
 	}
 	bool checkadyasent(int x1, int y1, int x2, int y2) {
 		if ((x1 == x2 + 1 || x1 == x2 - 1) && (y1 == y2) || ((y1 == y2 + 1 || y1 == y2 - 1) && (x1 == x2))) {
