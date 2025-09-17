@@ -11,19 +11,19 @@ using namespace std;
 class Gem {
 private:
 	RenderWindow *window;
-	int x, y;
+	int row, column;
 	int gemtype;
 
 public:
 	Gem() {
 		gemtype = 0;
-		x = 0;
-		y = 0;
+		row = 0;
+		column = 0;
 		window = nullptr;
 	}
 
-	void setx(int x) { this->y = x; }
-	void sety(int y) { this->x = y; }
+	void setrow(int row) { this->row = row; }
+	void setcolumn(int column) { this->column = column; }
 	void setgemtype(int gemtype) { this->gemtype = gemtype; }
 	int getgemtype() const { return gemtype; }
 	// this function draws a gem based on its type and position;
@@ -34,7 +34,7 @@ public:
 			shape.setFillColor(test);
 			shape.setOutlineColor(Color::Black);
 			shape.setOutlineThickness(5.f);
-			shape.setPosition(Vector2f((y * 75.f + 200.f), (x * 75.f)));
+			shape.setPosition(Vector2f((column * 75.f + 200.f), (row * 75.f)));
 			window->draw(shape);
 		}
 		if (gemtype == 1) {
@@ -42,7 +42,7 @@ public:
 			shape.setFillColor(Color::Red);
 			shape.setOutlineColor(Color::Black);
 			shape.setOutlineThickness(5.f);
-			shape.setPosition(Vector2f((y * 75.f + 205.f), (x * 75.f + 5)));
+			shape.setPosition(Vector2f((column * 75.f + 205.f), (row * 75.f + 5)));
 			window->draw(shape);
 		}
 		if (gemtype == 2) {
@@ -50,7 +50,7 @@ public:
 			shape.setFillColor(Color::Green);
 			shape.setOutlineColor(Color::Black);
 			shape.setOutlineThickness(5.f);
-			shape.setPosition(Vector2f((y * 75.f + 205.f), (x * 75.f + 12)));
+			shape.setPosition(Vector2f((column * 75.f + 205.f), (row * 75.f + 12)));
 			window->draw(shape);
 		}
 		if (gemtype == 3) {
@@ -58,7 +58,7 @@ public:
 			shape.setFillColor(Color::Blue);
 			shape.setOutlineColor(Color::Black);
 			shape.setOutlineThickness(5.f);
-			shape.setPosition(Vector2f((y * 75.f + 205.f), (x * 75.f + 5)));
+			shape.setPosition(Vector2f((column * 75.f + 205.f), (row * 75.f + 5)));
 			window->draw(shape);
 		}
 		if (gemtype == 4) {
@@ -66,7 +66,7 @@ public:
 			shape.setFillColor(Color::Yellow);
 			shape.setOutlineColor(Color::Black);
 			shape.setOutlineThickness(5.f);
-			shape.setPosition(Vector2f((y * 75.f + 205.f), (x * 75.f + 5)));
+			shape.setPosition(Vector2f((column * 75.f + 205.f), (row * 75.f + 5)));
 			window->draw(shape);
 		}
 		if (gemtype == 5) {
@@ -74,7 +74,7 @@ public:
 			shape.setFillColor(Color::Cyan);
 			shape.setOutlineColor(Color::Black);
 			shape.setOutlineThickness(5.f);
-			shape.setPosition(Vector2f((y * 75.f + 205.f), (x * 75.f + 5)));
+			shape.setPosition(Vector2f((column * 75.f + 205.f), (row * 75.f + 5)));
 			window->draw(shape);
 		}
 	}

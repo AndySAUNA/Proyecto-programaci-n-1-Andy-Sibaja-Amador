@@ -10,7 +10,7 @@ using namespace std;
 
 int main()
 {
-    int x=0, y=0, sx, sy;
+    int row=0, column=0, rowclick, columnclick;
     bool mouseButtonPressed = false;
     RenderWindow window(VideoMode(800, 600), "Proyecto programación 1 Andy Sibaja");
     window.setFramerateLimit(60);
@@ -42,13 +42,13 @@ int main()
             {
                 std::cout << "Left mouse button clicked at: "
                     << event.mouseButton.x << ", " << event.mouseButton.y << std::endl;
-                x = event.mouseButton.x;
-                y = event.mouseButton.y;
-                if (x>200){
-                    sx = (x - 200) / 75;
-                    sy = y / 75;
-                    cout << "posxy is:" << sx << "," << sy << endl;
-                    game.select(sx, sy);
+                columnclick = event.mouseButton.x;//column
+                rowclick = event.mouseButton.y;//row
+                if (columnclick>200){
+                    column = (columnclick - 200) / 75;
+                    row = rowclick / 75;
+                    cout << "posrc is:" << row << "," << column << endl;
+                    game.select(row, column);
                 }
                 mouseButtonPressed = false; // Reset the flag
 

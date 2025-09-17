@@ -13,13 +13,13 @@ private:
 	Gameboard* gboard;
 	RenderWindow* window;
 	bool firstselect;
-	int selx;
-	int sely;
+	int selrow;
+	int selcolumn;
 	Font font;
 public:
 	Game (RenderWindow &window) {
-		selx = 9;
-		sely = 9;
+		selrow = 9;
+		selcolumn = 9;
 		score = 0;
 		moves = 20;
 		this->window = &window;
@@ -52,75 +52,68 @@ public:
 		drawstats();
 		gboard->drawgameboard();
 	}
-	void buttonpressed(){
-		bool mouseButtonPressed = false;
-
-		}
-	void select(int x, int y) {
+	void select(int row, int column) {
 		gboard->conprintboard();
-		if (x == selx && y == sely) {//if the same gem position is selected again, it deselects it
+		if (row == selrow && column == selcolumn) {//if the same gem position is selected again, it deselects it
 			cout << "deselected" << endl;
-			selx = 9;
-			sely = 9;
+			selrow = 9;
+			selcolumn = 9;
 			firstselect = true;
 			gboard->resetxy12();
 		}
 		else if (firstselect == true) {//first gem selection
 			gboard->resetxy12();
-			gboard->setxy1(x, y);
-			selx = x;
-			sely = y;
+			gboard->setxy1(row, column);
+			selrow = row;
+			selcolumn = column;
 			firstselect = false;
-			cout << "first select, selected: " << x << "," << y << endl;
+			cout << "first select, selected: " << row << "," << column << endl;
 		}
 		else if (firstselect == false) {//second gem selection step
-			cout << "second select, selected: " << x << "," << y << endl;
-			cout << "first select was: " << selx << "," << sely << endl;
-			if (gboard->checkvalidmove1(selx, sely, x, y) == true) {
+			cout << "second select, selected: " << row << "," << column << endl;
+			cout << "first select was: " << selrow << "," << selcolumn << endl;
+			if (gboard->checkvalidmove1(selrow, selcolumn, row, column) == true) {
 				cout << "valid move" << endl;
-				gboard->setxy12(selx, sely, x, y);
-				selx = 9;
-				sely = 9;
+				gboard->setxy12(selrow, selcolumn, row, column);
+				selrow = 9;
+				selcolumn = 9;
 				firstselect = true;
 				if (gboard->checkvalidmove2() == true) { // this bit checks if the move creates a match and processes the move if it does
 					cout << "gboard->checkvalidmove2() check passed"; 
 					score += gboard->countmatches(gboard->detectmatches(gboard->getboard()));
 					moves--;
 					//gboard->gravity();
+					cout << "gravity applied, deselected" << endl;
+					selrow = 9;
+					selcolumn = 9;
+					firstselect = true;
+					gboard->resetxy12();
+
 				}
 				else { // this bit resets the selection if the move is invalid
 					cout << "gboard->checkvalidmove2() check failed" << endl; 
 					cout << "deselected" << endl;
-					selx = 9;
-					sely = 9;
+					selrow = 9;
+					selcolumn = 9;
 					firstselect = true;
 					gboard->resetxy12();
 				}
-				//if (gboard->checkvalidmove2() == true) { // this checks if the move creates a match and processes the move if it does
-
-				//	score += gboard->countmatches(gboard->detectmatches(gboard->getboard()));
-				//	moves--;
-				//}
-				//else {
-				//	cout << "error in checkvalidmove2" << endl;
-				//}
-			
 			}
-			else if (gboard->checkadyasent(selx, sely, x, y) == false) {//if the second selection is not adyasent to the first, it becomes the new first selection
+			else if (gboard->checkadyasent(selrow, selcolumn, row, column) == false) {//if the second selection is not adyasent to the first, it becomes the new first selection
 				gboard->resetxy12();
-				gboard->setxy1(x, y);
-				selx = x;
-				sely = y;
+				gboard->setxy1(row, column);
+				selrow = row;
+				selcolumn = column;
 				firstselect = false;
-				cout << "first select, selected: " << x << "," << y << endl;
+				cout << "first select, selected: " << row << "," << column << endl;
 			}
 			else {//if the move is invalid, it resets the selection to first select
 				gboard->resetxy12();
-				gboard->setxy1(x, y);
-				selx = x;
-				sely = y;
+				gboard->setxy1(row, column);
+				selrow = row;
+				selcolumn = column;
 				firstselect = false;
-				cout << "first select, selected: " << x << "," << y << endl;
+				cout << "first select, selected: " << row << "," << column << endl;
 			}
 		}
 		

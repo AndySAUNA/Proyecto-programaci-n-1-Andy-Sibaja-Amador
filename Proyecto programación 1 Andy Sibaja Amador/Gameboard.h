@@ -10,10 +10,14 @@ class Gameboard {
 private:
 	RenderWindow* window;
 	Gem** board;
-	int sx1, sy1, sx2, sy2;
+	int row1, column1, row2, column2;
 public:
 	Gameboard(RenderWindow& window) {
 		srand((unsigned)time(0));
+		row1 = 9;
+		column1 = 9;
+		row2 = 9;
+		column2 = 9;
 		this->window = &window;
 		int i, j;
 		board = new Gem * [8];
@@ -22,17 +26,22 @@ public:
 		}
 		for (i = 0; i < 8; i++) {
 			for (j = 0; j < 8; j++) {
-				board[i][j].setx(i);
-				board[i][j].sety(j);
+				board[i][j].setrow(i);
+				board[i][j].setcolumn(j);
 				board[i][j].setgemtype(0);
 				board[i][j].setwindow(window);
 			}
 		}
 		randomizegameboard();
-		sx1 = 9;
-		sy1 = 9;
-		sx2 = 9;
-		sy2 = 9;
+		for (i = 0; i < 8; i++) {
+			cout << "row " << i;
+			for (j = 0; j < 8; j++) {
+				cout << "\t" << board[i][j].getgemtype();
+			}
+			cout << endl;
+		}
+
+		
 	}
 	//this function draws the gameboard on the window
 
@@ -56,16 +65,17 @@ public:
 				window->draw(rect);
 			}
 		}
-		if (sx1 != 9 && sy1 != 9) {
-			rect2.setPosition(Vector2f((sx1 * 75.f + 200.f), (sy1 * 75.f)));
+		if (row1 != 9 && column1 != 9) {
+			rect2.setPosition(Vector2f((column1 * 75.f + 200.f), (row1 * 75.f)));
 			window->draw(rect2);
 		}
-		if (sx1 != 9 && sy1 != 9 && sx2 != 9 && sy2 != 9) {
-			rect2.setPosition(Vector2f((sx1 * 75.f + 200.f), (sy1 * 75.f)));
+		if (row1 != 9 && column1 != 9 && row2 != 9 && column2 != 9) {
+			rect2.setPosition(Vector2f((column1 * 75.f + 200.f), (row1 * 75.f)));
 			window->draw(rect2);
-			rect2.setPosition(Vector2f((sx2 * 75.f + 200.f), (sy2 * 75.f)));
+			rect2.setPosition(Vector2f((column2 * 75.f + 200.f), (row2 * 75.f)));
 			window->draw(rect2);
 		}
+
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				board[i][j].draw();
@@ -74,21 +84,21 @@ public:
 
 	}
 	//this function sets the coordinates of the first and second selection
-	void setxy12(int x1, int y1, int x2, int y2) {
-		sx1 = x1;
-		sy1 = y1;
-		sx2 = x2;
-		sy2 = y2;
+	void setxy12(int row1, int column1, int row2, int column2) {
+		this->row1 =row1;
+		this->column1 = column1;
+		this->row2 = row2;
+		this->column2 = column2;
 	}
-	void setxy1(int x, int y) {
-		sx1 = x;
-		sy1 = y;
+	void setxy1(int row, int column) {
+		row1 = row;
+		column1 = column;
 	}
 	void resetxy12() {
-		sx1 = 9;
-		sy1 = 9;
-		sx2 = 9;
-		sy2 = 9;
+		row1 = 9;
+		column1 = 9;
+		row2 = 9;
+		column2 = 9;
 	}
 	// this function randomizes the gem types on the board
 	void randomizegameboard() {
@@ -185,7 +195,7 @@ public:
 		this_thread::sleep_for(chrono::milliseconds(500));
 		srand((unsigned)time(0));
 		int i, j, f, t;
-		bool clean = false;
+		bool clean;
 
 		for (t = 0; t < 8; t++) {//to repass matrix 8 times to ensure all gems are active
 			clean = true;//on the start of a new run on the matrix it is assumed clean until proven otherwise
@@ -243,17 +253,17 @@ public:
 		}
 		for (i = 0; i < 8; i++) {
 			for (j = 0; j < 8; j++) {
-				temp[i][j].setx(i);
-				temp[i][j].sety(j);
+				temp[i][j].setrow(i);
+				temp[i][j].setcolumn(j);
 				temp[i][j].setgemtype(board[i][j].getgemtype());
 			}
 		}
 		//this part swaps the gems in the temporary board
 		int t1, t2;
-		t1 = temp[sx1][sy1].getgemtype();
-		t2 = temp[sx2][sy2].getgemtype();
-		temp[sx1][sy1].setgemtype(t2);
-		temp[sx2][sy2].setgemtype(t1);
+		t1 = temp[row1][column1].getgemtype();
+		t2 = temp[row2][column2].getgemtype();
+		temp[row1][column1].setgemtype(t2);
+		temp[row2][column2].setgemtype(t1);
 		//this part checks if the swap creates a match
 		bool** ogfakeboard = detectmatches(board);
 
@@ -270,7 +280,7 @@ public:
 		delete[] ogfakeboard;
 		bool** fakeboard = detectmatches(temp);
 		cout << "t1 and t2 are: " << t1 << "," << t2 << endl;
-		cout << "sx1,sy1 and sx2,sy2 are: " << sx1 << "," << sy1 << " and " << sx2 << "," << sy2 << endl;
+		cout << "sx1,sy1 and sx2,sy2 are: " << row1 << "," << column1 << " and " << row2 << "," << column2 << endl;
 		cout << "fakeboard is: " << endl;
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
@@ -286,8 +296,8 @@ public:
 			cout << "matches found" << endl;
 			/*cout << "Press enter to continue" << endl;
 			cin.get();*/
-			board[sx1][sy1].setgemtype(t2);
-			board[sx2][sy2].setgemtype(t1);
+			board[row1][column1].setgemtype(t2);
+			board[row2][column2].setgemtype(t1);
 			for (int i = 0; i < 8; i++) {
 				delete[] fakeboard[i];
 				delete[] temp[i];
