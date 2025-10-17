@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -131,12 +131,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BombGem.cpp" />
+    <ClCompile Include="Gem.cpp" />
+    <ClCompile Include="IceGem.cpp" />
+    <ClCompile Include="NormalGem.cpp" />
     <ClCompile Include="Proyecto programación 1 Andy Sibaja Amador.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BombGem.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gameboard.h" />
     <ClInclude Include="Gem.h" />
+    <ClInclude Include="IceGem.h" />
+    <ClInclude Include="NormalGem.h" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="resources\fonts\OpenSans-Regular.ttf" />

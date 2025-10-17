@@ -28,7 +28,7 @@ public:
 		firstselect = true;
 		font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
 	}
-	// draws score and moves
+	// draws score and moves ----------------------------------------------------------------------------------------------------------------------------
 	void drawstats() {
 		//prints score
 		Text text1;
@@ -47,11 +47,12 @@ public:
 		text2.setPosition(40.f, 40.f);
 		window->draw(text2);
 	}
-	// game loop
+	// game loop ----------------------------------------------------------------------------------------------------------------------------
 	void drawgame() {
 		drawstats();
 		gboard->drawgameboard();
 	}
+	// select function does the selecction process and iniciates moves ----------------------------------------------------------------------------------------------------------------------------
 	void select(int row, int column) {
 		gboard->conprintboard();
 		if (row == selrow && column == selcolumn) {//if the same gem position is selected again, it deselects it
@@ -116,6 +117,7 @@ public:
 		}
 		
 	}
+	// this function orders the destrcution of gems ----------------------------------------------------------------------------------------------------------------------------
 	int gemdestroyer() {
 
 		int destroyedgems = 0, mincounter = 0;
@@ -131,7 +133,7 @@ public:
 		}
 		return destroyedgems;
 	}
-	//destructor
+	//destructor ----------------------------------------------------------------------------------------------------------------------------
 	~Game() {
 		delete gboard;
 	}

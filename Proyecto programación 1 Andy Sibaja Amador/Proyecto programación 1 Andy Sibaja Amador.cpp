@@ -65,3 +65,4 @@ int main()
 
 //delay function for debugging
 //std::this_thread::sleep_for(chrono::milliseconds(500));
+//system("cls"); for clearing console
