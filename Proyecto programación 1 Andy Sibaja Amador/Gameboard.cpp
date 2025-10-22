@@ -177,6 +177,69 @@ bool Gameboard::deletematches() {
 	bool** fakeboard = detectmatches(board);
 	int i, j;
 	resetxy12();
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			if (board[i][j]->getgemtype() == 6) {
+				if (i == 0) {
+					if (fakeboard[i + 1][j] == true || fakeboard[i][j - 1] == true || fakeboard[i][j + 1] == true) {
+						cout << "KABOOOM!!!!!!" << endl;
+						fakeboard[i][j] = true;
+						if (i != 7) { fakeboard[i + 1][j] = true; }
+						if (i != 7 && j != 7) { fakeboard[i + 1][j + 1] = true; }
+						if (i != 7 && j != 0) { fakeboard[i + 1][j - 1] = true; }
+						if (i != 0) { fakeboard[i - 1][j] = true; }
+						if (i != 0 && j != 7) { fakeboard[i - 1][j + 1] = true; }
+						if (i != 0 && j != 0) { fakeboard[i - 1][j - 1] = true; }
+						if (i != 0 && j != 0) { fakeboard[i][j - 1] = true; }
+						if (i != 0 && j != 7) { fakeboard[i][j + 1] = true; }
+					}
+				}
+				if (j == 0) {
+					if (fakeboard[i + 1][j] == true || fakeboard[i - 1][j] == true || fakeboard[i][j + 1] == true) {
+						cout << "KABOOOM!!!!!!" << endl;
+						fakeboard[i][j] = true;
+						if (i != 7) { fakeboard[i + 1][j] = true; }
+						if (i != 7 && j != 7) { fakeboard[i + 1][j + 1] = true; }
+						if (i != 7 && j != 0) { fakeboard[i + 1][j - 1] = true; }
+						if (i != 0) { fakeboard[i - 1][j] = true; }
+						if (i != 0 && j != 7) { fakeboard[i - 1][j + 1] = true; }
+						if (i != 0 && j != 0) { fakeboard[i - 1][j - 1] = true; }
+						if (i != 0 && j != 0) { fakeboard[i][j - 1] = true; }
+						if (i != 0 && j != 7) { fakeboard[i][j + 1] = true; }
+					}
+				}
+				if (i == 7) {
+					if (fakeboard[i - 1][j] == true || fakeboard[i][j - 1] == true || fakeboard[i][j + 1] == true) {
+						cout << "KABOOOM!!!!!!" << endl;
+						fakeboard[i][j] = true;
+						if (i != 7) { fakeboard[i + 1][j] = true; }
+						if (i != 7 && j != 7) { fakeboard[i + 1][j + 1] = true; }
+						if (i != 7 && j != 0) { fakeboard[i + 1][j - 1] = true; }
+						if (i != 0) { fakeboard[i - 1][j] = true; }
+						if (i != 0 && j != 7) { fakeboard[i - 1][j + 1] = true; }
+						if (i != 0 && j != 0) { fakeboard[i - 1][j - 1] = true; }
+						if (i != 0 && j != 0) { fakeboard[i][j - 1] = true; }
+						if (i != 0 && j != 7) { fakeboard[i][j + 1] = true; }
+					}
+				}
+				if (j == 7) {
+					if (fakeboard[i + 1][j] == true || fakeboard[i - 1][j] == true || fakeboard[i][j - 1] == true) {
+						cout << "KABOOOM!!!!!!" << endl;
+						fakeboard[i][j] = true;
+						if (i != 7) { fakeboard[i + 1][j] = true; }
+						if (i != 7 && j != 7) { fakeboard[i + 1][j + 1] = true; }
+						if (i != 7 && j != 0) { fakeboard[i + 1][j - 1] = true; }
+						if (i != 0) { fakeboard[i - 1][j] = true; }
+						if (i != 0 && j != 7) { fakeboard[i - 1][j + 1] = true; }
+						if (i != 0 && j != 0) { fakeboard[i - 1][j - 1] = true; }
+						if (i != 0 && j != 0) { fakeboard[i][j - 1] = true; }
+						if (i != 0 && j != 7) { fakeboard[i][j + 1] = true; }
+					}
+				}
+					
+			}
+		}
+	}
 	bool matchesfound = false;
 	for (i = 0; i < 8; i++) {
 		for (j = 0; j < 8; j++) {
