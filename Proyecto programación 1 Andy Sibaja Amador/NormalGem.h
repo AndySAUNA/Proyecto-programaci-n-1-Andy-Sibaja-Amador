@@ -4,6 +4,7 @@ class NormalGem : public Gem
 {
 public:
 	NormalGem();
-	void draw();
+	NormalGem(int row, int column, RenderWindow* window);
+	void draw(int row, int column);
 };
 

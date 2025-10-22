@@ -4,7 +4,6 @@
 using namespace sf;
 using namespace std;
 #include <iostream>
-#include "Gem.h"
 #include "Gameboard.h"
 #include "Game.h"
 
@@ -15,8 +14,6 @@ int main()
     RenderWindow window(VideoMode(800, 600), "Proyecto programación 1 Andy Sibaja");
     window.setFramerateLimit(60);
 
-	Gameboard board(window);
-	board.randomizegameboard();
 	Game game(window);
 
     while (window.isOpen())

@@ -132,6 +132,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BombGem.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Gameboard.cpp" />
     <ClCompile Include="Gem.cpp" />
     <ClCompile Include="IceGem.cpp" />
     <ClCompile Include="NormalGem.cpp" />

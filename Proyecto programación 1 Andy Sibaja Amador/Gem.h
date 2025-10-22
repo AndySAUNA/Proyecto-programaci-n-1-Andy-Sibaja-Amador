@@ -11,13 +11,16 @@ using namespace std;
 class Gem {
 protected:
 	RenderWindow *window;
-	int row, column;
+	int row, column, animesteptotal, animestep;
     int gemtype;
+	bool selected;
 
 public:
 	// ----------------------------------------------------------------------------------------------------------------------------
 	Gem();
-	Gem(int row, int column, int gemtype, RenderWindow *window);
+	Gem(int row, int column, RenderWindow* window);
+	//  ----------------------------------------------------------------------------------------------------------------------------
+
 	void setrow(int row) { this->row = row; }
 	int getrow() { return row;}
 	void setcolumn(int column) { this->column = column; }
@@ -25,6 +28,12 @@ public:
 	void setgemtype(int gemtype) { this->gemtype = gemtype; }
 	int getgemtype() { return gemtype; }
 	// this function draws a gem based on its type and position;
-	virtual void draw() = 0;
+	virtual void draw(int column, int row) = 0;
+	void draw_on_grid();
+	void drawanimatedposition(int animestep);
 	void setwindow(RenderWindow& window) {this->window = &window;}
+	bool getselect() { return selected; }
+	void select() { selected = true; }
+	void deselect() { selected = false; }
+	~Gem();
 };

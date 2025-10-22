@@ -18,6 +18,24 @@
     <ClCompile Include="Proyecto programación 1 Andy Sibaja Amador.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BombGem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Gem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IceGem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalGem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Gameboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Gameboard.h">
@@ -27,6 +45,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Gem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BombGem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IceGem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalGem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
