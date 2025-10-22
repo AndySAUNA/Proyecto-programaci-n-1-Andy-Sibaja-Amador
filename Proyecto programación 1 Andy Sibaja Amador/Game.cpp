@@ -118,17 +118,20 @@ void Game::select(int row, int column) {
 
 // this function orders the destrcution of gems ----------------------------------------------------------------------------------------------------------------------------
 int Game::gemdestroyer() {
-
+	int aux;
 	int destroyedgems = 0, mincounter = 0;
 	destroyedgems += gboard->countmatches(gboard->detectmatches(gboard->getboard()));
+	gboard->addpowergems(destroyedgems/4);
 	while (gboard->deletematches() == true) {
 		gboard->gravity();
-		destroyedgems += gboard->countmatches(gboard->detectmatches(gboard->getboard()));
-		this_thread::sleep_for(chrono::milliseconds(500));
+		aux= gboard->countmatches(gboard->detectmatches(gboard->getboard()));
+		destroyedgems += aux;
+		if (aux >= 4){ gboard->addpowergems(aux/4); }
 		window->clear();
 		drawgame();
 		window->display();
 		cout << "matches counted: " << destroyedgems;
+		this_thread::sleep_for(chrono::milliseconds(500));
 	}
 	return destroyedgems;
 }

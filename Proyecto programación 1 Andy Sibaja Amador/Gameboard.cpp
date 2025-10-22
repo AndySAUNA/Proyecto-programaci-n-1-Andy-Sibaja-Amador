@@ -7,6 +7,7 @@ Gameboard::Gameboard(RenderWindow& window) {
 	column1 = 9;
 	row2 = 9;
 	column2 = 9;
+	powergemcounter = 0;
 	this->window = &window;
 	//makes a pointer array of Gem type;
 	board = new Gem * *[8];
@@ -57,9 +58,9 @@ void Gameboard::drawgameboard() {
 				board[i][j]->draw_on_grid();
 			}
 			else {
-				rect.setPosition(j, i);
 				dcolumn = j * 75.f + 200.f;
 				drow = i * 75.f;
+				rect.setPosition(dcolumn, drow);
 			}
 		}
 	}
@@ -276,14 +277,27 @@ bool Gameboard::gravitystep() {
 
 // this function generates the missing gems int he top part in a randomized manner ----------------------------------------------------------------------------------------------------------------------------
 void Gameboard::generatetop() {
+	srand((unsigned)time(0));
+	int r;
 	// this bitgenerates the gems in the top part
 	for (int i = 0; i < 8; i++) {
 		if (board[0][i] == nullptr) {
-			board[0][i] = new NormalGem(0,i,window);
-			window->clear();
-			drawgameboard();
-			window->display();
-			this_thread::sleep_for(chrono::milliseconds(100));
+			r = (rand() % 8) + 1;
+			if (powergemcounter > 0 && r == 8) {
+				board[0][i] = new BombGem(0, i, window);
+				window->clear();
+				drawgameboard();
+				window->display();
+				this_thread::sleep_for(chrono::milliseconds(100));
+			}
+			else{
+				board[0][i] = new NormalGem(0, i, window);
+				window->clear();
+				drawgameboard();
+				window->display();
+				this_thread::sleep_for(chrono::milliseconds(100));
+			}
+			
 		}
 	}
 }

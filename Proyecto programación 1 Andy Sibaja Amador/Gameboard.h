@@ -16,7 +16,7 @@ class Gameboard {
 protected:
 	RenderWindow* window;
 	Gem*** board;
-	int row1, column1, row2, column2;
+	int row1, column1, row2, column2,powergemcounter;
 public:
 	//constructor, creates the dynamic matrix and randomizes it's content with NormalGems ----------------------------------------------------------------------------------------------------------------------------
 	Gameboard(RenderWindow& window);
@@ -58,6 +58,8 @@ public:
 	void deletegem(int x, int y);
 	//consol prints the board as a matrix of numbers corresponding to the gem type of each entry ----------------------------------------------------------------------------------------------------------------------------
 	void conprintboard();
+	//adds to the powergemcounter ----------------------------------------------------------------------------------------------------------------------------
+	void addpowergems(int add) { powergemcounter = powergemcounter + add; }
 	//destructor
 	~Gameboard();
 };
