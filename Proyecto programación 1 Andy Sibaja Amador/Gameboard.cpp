@@ -527,8 +527,18 @@ void Gameboard::addice(int x, int y)
 	board[x][y] = new IceGem(x,y,window);
 	
 }
-//destructor
+//destyer
 Gameboard::~Gameboard() {
-
-
+	for (int i = 0; i < 8; ++i) {
+		for (int j = 0; j < 8; ++j) {
+			if (board[i][j] != nullptr) {
+				delete board[i][j];
+				board[i][j] = nullptr;
+			}
+		}
+		delete[] board[i];
+		board[i] = nullptr;
+	}
+	delete[] board;
+	board = nullptr;
 }
