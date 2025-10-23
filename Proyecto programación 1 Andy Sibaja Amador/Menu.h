@@ -1,0 +1,19 @@
+#pragma once
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
+#include <iostream>
+#include <string>
+using namespace sf;
+using namespace std;
+#include "Game.h"
+class Menu
+{
+private:
+	Font font;
+public:
+	Menu();
+	void Gameloop();
+
+};
+

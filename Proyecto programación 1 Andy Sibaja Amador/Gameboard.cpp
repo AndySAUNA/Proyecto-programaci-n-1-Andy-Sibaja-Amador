@@ -3,10 +3,10 @@
 //constructor, creates the dynamic matrix and randomizes it's content with NormalGems ----------------------------------------------------------------------------------------------------------------------------
 Gameboard::Gameboard(RenderWindow& window) {
 	srand((unsigned)time(0));
-	row1 = 9;
-	column1 = 9;
-	row2 = 9;
-	column2 = 9;
+	row1 = 8;
+	column1 = 8;
+	row2 = 8;
+	column2 = 8;
 	powergemcounter = 0;
 	this->window = &window;
 	//makes a pointer array of Gem type;
@@ -43,34 +43,47 @@ void Gameboard::drawgameboard() {
 	float drow;
 	
 
-
-	if ((row1 != 9 && column1 != 9) && (row2 != 9 && column2 != 9)) {
-		board[row1][column1]->select();
-		board[row2][column2]->select();
-	}
-	else if (row1 != 9 && column1 != 9){
-		board[row1][column1]->select();
-	}
-	//draws the gems on the board
-	for (int i = 0; i < 8; i++) {
-		for (int j = 0; j < 8; j++) {
-			if (board[i][j] != nullptr) {
-				board[i][j]->draw_on_grid();
-			}
-			else {
-				dcolumn = j * 75.f + 200.f;
-				drow = i * 75.f;
-				rect.setPosition(dcolumn, drow);
+	try {
+		if (row1 < 0 && column1 < 0 && row1 > 8 && column1 > 8 && row2 < 0 && column2 < 0 && row2 > 8 && column2 > 8) { throw 1; }
+		if (row1 >= 0 && column1 >= 0 && row1 < 8 && column1 < 8 && row2 >= 0 && column2 >= 0 && row2 < 8 && column2 < 8) { if (board[row1][column1] == nullptr) { throw 2; } }
+		if (row1 >= 0 && column1 >= 0 && row1 < 8 && column1 < 8 && row2 >= 0 && column2 >= 0 && row2 < 8 && column2 < 8) { if (board[row1][column1] == nullptr || board[row2][column2] == nullptr) { throw 3; } }
+		if ((row1 != 8 && column1 != 8) && (row2 != 8 && column2 != 8)) {
+			if (board[row1][column1] != nullptr || board[row2][column2] != nullptr) {
+				board[row1][column1]->select();
+				board[row2][column2]->select();
 			}
 		}
-	}
+		else if (row1 != 8 && column1 != 8) {
+			if (board[row1][column1] != nullptr) {
+				board[row1][column1]->select();
+			}
+		}
+		//draws the gems on the board
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (board[i][j] != nullptr) {
+					board[i][j]->draw_on_grid();
+				}
+				else {
+					dcolumn = j * 75.f + 200.f;
+					drow = i * 75.f;
+					rect.setPosition(dcolumn, drow);
+				}
+			}
+		}
 
-	if ((row1 != 9 && column1 != 9) && (row2 != 9 && column2 != 9)) {
-		board[row1][column1]->deselect();
-		board[row2][column2]->deselect();
+		if ((row1 != 8 && column1 != 8) && (row2 != 8 && column2 != 8)) {
+			board[row1][column1]->deselect();
+			board[row2][column2]->deselect();
+		}
+		else if (row1 != 8 && column1 != 8) {
+			board[row1][column1]->deselect();
+		}
 	}
-	else if (row1 != 9 && column1 != 9) {
-		board[row1][column1]->deselect();
+	catch (int error) {
+		if (error == 1) { cout << "error drawing board: invalid selection coordinates " << endl; }
+		if (error == 2) { cout << "error drawing board: attempted to select a null pointer" << endl; }
+		if (error == 2) { cout << "error drawing board: attempted to select a null pointer" << endl; }
 	}
 }
 
@@ -90,10 +103,10 @@ void Gameboard::setxy1(int row, int column) {
 
 //resets the x an y coordinates for selecction ----------------------------------------------------------------------------------------------------------------------------
 void Gameboard::resetxy12() {
-	row1 = 9;
-	column1 = 9;
-	row2 = 9;
-	column2 = 9;
+	row1 = 8;
+	column1 = 8;
+	row2 = 8;
+	column2 = 8;
 }
 
 // this function randomizes the gems on the board  only to NormalGem, if there is another child class of Gem, it will be deleted and replaced----------------------------------------------------------------------------------------------------------------------------
@@ -177,67 +190,42 @@ bool Gameboard::deletematches() {
 	bool** fakeboard = detectmatches(board);
 	int i, j;
 	resetxy12();
+	bool R1, R2, R3, R4;
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
-			if (board[i][j]->getgemtype() == 6) {
-				if (i == 0) {
-					if (fakeboard[i + 1][j] == true || fakeboard[i][j - 1] == true || fakeboard[i][j + 1] == true) {
-						cout << "KABOOOM!!!!!!" << endl;
-						fakeboard[i][j] = true;
-						if (i != 7) { fakeboard[i + 1][j] = true; }
-						if (i != 7 && j != 7) { fakeboard[i + 1][j + 1] = true; }
-						if (i != 7 && j != 0) { fakeboard[i + 1][j - 1] = true; }
-						if (i != 0) { fakeboard[i - 1][j] = true; }
-						if (i != 0 && j != 7) { fakeboard[i - 1][j + 1] = true; }
-						if (i != 0 && j != 0) { fakeboard[i - 1][j - 1] = true; }
-						if (i != 0 && j != 0) { fakeboard[i][j - 1] = true; }
-						if (i != 0 && j != 7) { fakeboard[i][j + 1] = true; }
-					}
-				}
-				if (j == 0) {
-					if (fakeboard[i + 1][j] == true || fakeboard[i - 1][j] == true || fakeboard[i][j + 1] == true) {
-						cout << "KABOOOM!!!!!!" << endl;
-						fakeboard[i][j] = true;
-						if (i != 7) { fakeboard[i + 1][j] = true; }
-						if (i != 7 && j != 7) { fakeboard[i + 1][j + 1] = true; }
-						if (i != 7 && j != 0) { fakeboard[i + 1][j - 1] = true; }
-						if (i != 0) { fakeboard[i - 1][j] = true; }
-						if (i != 0 && j != 7) { fakeboard[i - 1][j + 1] = true; }
-						if (i != 0 && j != 0) { fakeboard[i - 1][j - 1] = true; }
-						if (i != 0 && j != 0) { fakeboard[i][j - 1] = true; }
-						if (i != 0 && j != 7) { fakeboard[i][j + 1] = true; }
-					}
-				}
-				if (i == 7) {
-					if (fakeboard[i - 1][j] == true || fakeboard[i][j - 1] == true || fakeboard[i][j + 1] == true) {
-						cout << "KABOOOM!!!!!!" << endl;
-						fakeboard[i][j] = true;
-						if (i != 7) { fakeboard[i + 1][j] = true; }
-						if (i != 7 && j != 7) { fakeboard[i + 1][j + 1] = true; }
-						if (i != 7 && j != 0) { fakeboard[i + 1][j - 1] = true; }
-						if (i != 0) { fakeboard[i - 1][j] = true; }
-						if (i != 0 && j != 7) { fakeboard[i - 1][j + 1] = true; }
-						if (i != 0 && j != 0) { fakeboard[i - 1][j - 1] = true; }
-						if (i != 0 && j != 0) { fakeboard[i][j - 1] = true; }
-						if (i != 0 && j != 7) { fakeboard[i][j + 1] = true; }
-					}
-				}
-				if (j == 7) {
-					if (fakeboard[i + 1][j] == true || fakeboard[i - 1][j] == true || fakeboard[i][j - 1] == true) {
-						cout << "KABOOOM!!!!!!" << endl;
-						fakeboard[i][j] = true;
-						if (i != 7) { fakeboard[i + 1][j] = true; }
-						if (i != 7 && j != 7) { fakeboard[i + 1][j + 1] = true; }
-						if (i != 7 && j != 0) { fakeboard[i + 1][j - 1] = true; }
-						if (i != 0) { fakeboard[i - 1][j] = true; }
-						if (i != 0 && j != 7) { fakeboard[i - 1][j + 1] = true; }
-						if (i != 0 && j != 0) { fakeboard[i - 1][j - 1] = true; }
-						if (i != 0 && j != 0) { fakeboard[i][j - 1] = true; }
-						if (i != 0 && j != 7) { fakeboard[i][j + 1] = true; }
-					}
-				}
-					
+			R1 = false, R2 = false, R3 = false, R4 = false;
+			if (board[i][j] != nullptr) {
+				if (board[i][j]->getgemtype() == 6) {
+					cout << "KABOOOM!!!!!!" << endl;
+
+					if (i > 0 && i<7 && j > 0 && j<7){
+						if (fakeboard[i + 1][j] == true || fakeboard[i][j - 1] == true || fakeboard[i][j + 1] == true) {
+
+							fakeboard[i][j] = true;
+							fakeboard[i + 1][j] = true;
+							fakeboard[i + 1][j + 1] = true;
+							fakeboard[i + 1][j - 1] = true;
+							fakeboard[i - 1][j] = true; }
+							fakeboard[i - 1][j + 1] = true;
+							fakeboard[i - 1][j - 1] = true;
+							fakeboard[i][j - 1] = true;
+							fakeboard[i][j + 1] = true;
+						}
+					}// to fix later
+				/*
+				else {
+					fakeboard[i][j] = true;
+					if (i != 7) { fakeboard[i + 1][j] = true; }
+					if (i != 7 && j != 7) { fakeboard[i + 1][j + 1] = true; }
+					if (i != 7 && j != 0) { fakeboard[i + 1][j - 1] = true; }
+					if (i != 0) { fakeboard[i - 1][j] = true; }
+					if (i != 0 && j != 7) { fakeboard[i - 1][j + 1] = true; }
+					if (i != 0 && j != 0) { fakeboard[i - 1][j - 1] = true; }
+					if (i != 0 && j != 0) { fakeboard[i][j - 1] = true; }
+					if (i != 0 && j != 7) { fakeboard[i][j + 1] = true; }
+				}*/
 			}
+			
 		}
 	}
 	bool matchesfound = false;
@@ -245,7 +233,6 @@ bool Gameboard::deletematches() {
 		for (j = 0; j < 8; j++) {
 			if (fakeboard[i][j] == true) {
 				board[i][j]->select();
-				board[i][j]->draw_on_grid();
 			}
 		}
 	}
@@ -262,9 +249,11 @@ bool Gameboard::deletematches() {
 			}
 		}
 	}
+
 	window->clear();
 	drawgameboard();
 	window->display();
+	this_thread::sleep_for(chrono::milliseconds(500));
 	return matchesfound;
 }
 
@@ -312,26 +301,28 @@ void Gameboard::gravity() {
 
 // this function pulls everything down once, retruns true if it doesn't find anything to pull ----------------------------------------------------------------------------------------------------------------------------
 bool Gameboard::gravitystep() {
+	generatetop();
 	bool clean = true;
-		for (int i = 1; i < 8; i++) {
-			generatetop();
+		for (int i = 7; i > 0; i--) {
 			for (int j = 0; j < 8; j++) {
 				if (board[i][j] == nullptr) {
 					if (board[i - 1][j] != nullptr) {
 						if (board[i - 1][j]->getgemtype() <=6 && board[i - 1][j]->getgemtype() >= 0) {
+							generatetop();
 							board[i][j] = board[i - 1][j];
 							board[i - 1][j] = nullptr;
 							board[i][j]->setrow(i);
 							board[i][j]->setcolumn(j);
 							clean = false;
-							window->clear();
-							drawgameboard();
-							window->display();
-							this_thread::sleep_for(chrono::milliseconds(100));
+							generatetop();
 						}
 					}
 				}
 			}
+			window->clear();
+			drawgameboard();
+			window->display();
+			this_thread::sleep_for(chrono::milliseconds(100));
 			
 		}
 		
@@ -348,17 +339,16 @@ void Gameboard::generatetop() {
 			r = (rand() % 8) + 1;
 			if (powergemcounter > 0 && r == 8) {
 				board[0][i] = new BombGem(0, i, window);
+				powergemcounter--;
 				window->clear();
 				drawgameboard();
 				window->display();
-				this_thread::sleep_for(chrono::milliseconds(100));
 			}
 			else{
 				board[0][i] = new NormalGem(0, i, window);
 				window->clear();
 				drawgameboard();
 				window->display();
-				this_thread::sleep_for(chrono::milliseconds(100));
 			}
 			
 		}

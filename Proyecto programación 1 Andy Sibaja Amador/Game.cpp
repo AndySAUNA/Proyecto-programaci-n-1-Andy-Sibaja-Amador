@@ -1,8 +1,8 @@
 #include "Game.h"
 
 Game::Game(RenderWindow& window) {
-	selrow = 9;
-	selcolumn = 9;
+	selrow = 8;
+	selcolumn = 8;
 	score = 0;
 	moves = 20;
 	this->window = &window;
@@ -47,8 +47,8 @@ void Game::select(int row, int column) {
 		gboard->conprintboard();
 		if (row == selrow && column == selcolumn) {//if the same gem position is selected again, it deselects it
 			cout << "deselected" << endl;
-			selrow = 9;
-			selcolumn = 9;
+			selrow = 8;
+			selcolumn = 8;
 			firstselect = true;
 			gboard->resetxy12();
 		}
@@ -66,8 +66,8 @@ void Game::select(int row, int column) {
 			if (gboard->checkvalidmove1(selrow, selcolumn, row, column) == true) {
 				cout << "valid move" << endl;
 				gboard->setxy12(selrow, selcolumn, row, column);
-				selrow = 9;
-				selcolumn = 9;
+				selrow = 8;
+				selcolumn = 8;
 				firstselect = true;
 				if (gboard->checkvalidmove2() == true) { // this bit checks if the move creates a match and processes the move if it does
 					cout << "gboard->checkvalidmove2() check passed";
@@ -77,8 +77,8 @@ void Game::select(int row, int column) {
 					this_thread::sleep_for(chrono::milliseconds(500));
 					score += gemdestroyer();
 					moves--;
-					selrow = 9;
-					selcolumn = 9;
+					selrow = 8;
+					selcolumn = 8;
 					firstselect = true;
 					gboard->resetxy12();
 
@@ -86,8 +86,8 @@ void Game::select(int row, int column) {
 				else { // this bit resets the selection if the move is invalid
 					cout << "gboard->checkvalidmove2() check failed" << endl;
 					cout << "deselected" << endl;
-					selrow = 9;
-					selcolumn = 9;
+					selrow = 8;
+					selcolumn = 8;
 					firstselect = true;
 					gboard->resetxy12();
 				}

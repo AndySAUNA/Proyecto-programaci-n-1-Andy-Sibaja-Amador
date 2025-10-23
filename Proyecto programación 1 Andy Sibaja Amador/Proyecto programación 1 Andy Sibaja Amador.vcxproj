@@ -136,6 +136,7 @@
     <ClCompile Include="Gameboard.cpp" />
     <ClCompile Include="Gem.cpp" />
     <ClCompile Include="IceGem.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="NormalGem.cpp" />
     <ClCompile Include="Proyecto programación 1 Andy Sibaja Amador.cpp" />
   </ItemGroup>
@@ -145,6 +146,7 @@
     <ClInclude Include="Gameboard.h" />
     <ClInclude Include="Gem.h" />
     <ClInclude Include="IceGem.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="NormalGem.h" />
   </ItemGroup>
   <ItemGroup>

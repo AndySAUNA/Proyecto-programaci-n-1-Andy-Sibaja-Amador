@@ -5,6 +5,8 @@
 #include "Gameboard.h"
 using namespace sf;
 using namespace std;
+#include "Game.h"
+
 // agregado para arreglar un error desconocido
 class Gameboard;
 class Game {
