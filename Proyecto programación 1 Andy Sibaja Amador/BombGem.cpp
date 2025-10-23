@@ -17,6 +17,7 @@ void BombGem::draw(int column, int row)
 		rect.setOutlineColor(Color::Black);
 		rect.setOutlineThickness(5.f);
 		rect.setPosition(Vector2f((column + 5.f), (row + 5.f)));
+
 		CircleShape shape(30.f);
 		shape.setFillColor(Color::Black);
 		shape.setOutlineColor(Color::Red);

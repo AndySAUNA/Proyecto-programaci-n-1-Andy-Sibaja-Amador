@@ -11,9 +11,15 @@ class Menu
 {
 private:
 	Font font;
+	bool gameactive;
+	bool menuactive;
+	RenderWindow* windows;
+	Game* G;
 public:
 	Menu();
+	void gamemenu(int x,int y);
 	void Gameloop();
+	void draw_Menu();
 
 };
 

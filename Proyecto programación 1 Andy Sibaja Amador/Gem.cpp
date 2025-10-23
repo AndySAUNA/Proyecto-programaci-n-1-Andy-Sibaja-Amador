@@ -26,7 +26,7 @@ Gem::Gem(int row, int column, RenderWindow* window)
 void Gem::draw_on_grid()
 {
 	try {
-		if (row == 9 && column == 9) { throw 1; }
+		if (row == 8 && column == 8) { throw 1; }
 		float dcolumn = column * 75.f + 200.f;
 		float drow = row * 75.f;
 		draw(dcolumn, drow);

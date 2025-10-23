@@ -350,6 +350,7 @@ void Gameboard::generatetop() {
 				drawgameboard();
 				window->display();
 			}
+			this_thread::sleep_for(chrono::milliseconds(1));
 			
 		}
 	}
@@ -519,6 +520,12 @@ void Gameboard::conprintboard() {
 		}
 		cout << std::endl;
 	}
+}
+void Gameboard::addice(int x, int y)
+{
+	delete board[x][y];
+	board[x][y] = new IceGem(x,y,window);
+	
 }
 //destructor
 Gameboard::~Gameboard() {

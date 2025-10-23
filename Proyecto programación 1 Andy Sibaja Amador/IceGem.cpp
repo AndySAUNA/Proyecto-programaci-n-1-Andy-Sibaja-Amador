@@ -11,13 +11,15 @@ void IceGem::draw(int column, int row) {
 	rect.setOutlineColor(Color::Black);
 	rect.setOutlineThickness(5.f);
 	rect.setPosition(Vector2f((column + 5.f), (row + 5.f)));
-	RectangleShape shape(Vector2f(30.f, 30.f));
-	shape.setFillColor(Color::White);
-	shape.setOutlineColor(Color::Red);
-	shape.setOutlineThickness(5.f);
-	shape.setPosition(Vector2f((column + 5), (row + 5)));
+	
+	RectangleShape rect2(Vector2f(50.f, 50.f));
+	rect.setFillColor(Color::White);
+	rect.setOutlineColor(test);
+	rect.setOutlineThickness(5.f);
+	rect.setPosition(Vector2f((column), (row)));
+
 	window->draw(rect);
-	window->draw(shape);
+	window->draw(rect2);
 }
 
 IceGem::~IceGem()

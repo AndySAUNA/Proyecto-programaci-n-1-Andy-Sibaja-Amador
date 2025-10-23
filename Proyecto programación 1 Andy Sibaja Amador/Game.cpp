@@ -116,6 +116,17 @@ void Game::select(int row, int column) {
 	}
 }
 
+void Game::icegame()
+{
+	srand((unsigned)time(0));
+	int aux1, aux2;
+	for (int i = 0; i < 5; i++) {
+		aux1 = rand() % 8;
+		aux2 = rand() % 8;
+		gboard->addice(aux1,aux2);
+	}
+}
+
 // this function orders the destrcution of gems ----------------------------------------------------------------------------------------------------------------------------
 int Game::gemdestroyer() {
 	int aux;

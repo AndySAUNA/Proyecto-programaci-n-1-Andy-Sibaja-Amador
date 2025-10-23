@@ -60,6 +60,7 @@ public:
 	void conprintboard();
 	//adds to the powergemcounter ----------------------------------------------------------------------------------------------------------------------------
 	void addpowergems(int add) { powergemcounter = powergemcounter + add; }
+	void addice(int x, int y);
 	//destructor
 	~Gameboard();
 };
