@@ -1,0 +1,11 @@
+22 de octubre 2025
+
+segunda entrega de Andy:
+
+	admito que calcule muy mal el tiempo que iba necesitar para hacer esto, lo entrego com modulos incompletos y faltando funciones no habia previsto la cantidad masiva de errores que iba generar adaptar el codigo y la mayoria del tiempo me lo lleve corrigiendo errores, he usado copilot extensivamente para buscar y comprender los errores, yo he desactivado el autocompletado, entonces espero que que este uso que le doy a copilot sea acceptado, voy a ver si saco el carnet de estudiante, aparentemente GitHub ofrece un programa para estudiantes que puedan usar copilot pro gratis dentro de cierto rango, con tal de no pagar los $100 anuales, lo veo como una herramienta que augmenta las capacidades de uno, el uso que le he dado es prácticamente como tener un mini profesor en la computadora dispuesto a responder mis preguntas a demanda y guiarme a través de mis errores, es bastante util y conveniente, aunque siento que no estoy practicando buenas practicas, voy a tener que repasar las buenas practicas e implementarlas mas a menudo
+
+	Sobre la segunda entrega: agregue el menu y tiene dos modos de juego: el normal y el que tiene gemas de hielo, la matriz Tambien genera gemas bomba de forma que genera una por cada combinacion de 4 gemas que se eliminan, de forma aleatoria en probabilidades de 1/8 cada vez que se genera una gema arriba durante la function de gravedad, el modulo de bombas no funciona bien, tengo que corregirlo, en consola escribe "kaboom" cada vez que "explota" una gema bomba, pero las condiciones decidi no arreglarlas por motivo de escasez de tiempo, y la gema de hielo es eliminada por la gema bomba, tengo que agregar que sea eliminada con combinaciones de gema normal cercanas
+
+	ahora voy a enfocarme en estudiar para calculo y su quiz que viene la siguiene semana y hacer las practicas en preparacion para el quiz de program 1 que tambien viene la siguiente semana.
+
+gracias por su tiempo, entrego a la 11pm, una hora antes de que cierre esto, buenas noches.
