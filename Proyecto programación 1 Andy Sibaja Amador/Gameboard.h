@@ -32,8 +32,12 @@ public:
 	void randomizegameboard();
 	//this function detects mathces on the board ----------------------------------------------------------------------------------------------------------------------------
 	bool** detectmatches(Gem*** board);
+	// detect matches with a twist! it now adds the Kaboom!!!
+	bool** detectmatcheswithbombs(Gem*** board);
 	// this function deletes matches on the board and returns true if matches were found ----------------------------------------------------------------------------------------------------------------------------
 	bool deletematches();
+	int bomber(bool** fakeboard);
+	int kaboom(int row, int column, bool** fakeboard);
 	//this function takes a fakeboard and counts the amount of matches in it and returns the number ----------------------------------------------------------------------------------------------------------------------------
 	int countmatches(bool** fakeboard);
 	// gives you the Gem class board matrix ----------------------------------------------------------------------------------------------------------------------------
@@ -44,6 +48,7 @@ public:
 	void gravity();
 	// this function pulls everythin once ----------------------------------------------------------------------------------------------------------------------------
 	bool gravitystep();
+	bool gravitystep2();
 	// this function generates the missing gems int he top part in a randomized manner ----------------------------------------------------------------------------------------------------------------------------
 	void generatetop();
 	//unrefranced, must consider deleting ----------------------------------------------------------------------------------------------------------------------------

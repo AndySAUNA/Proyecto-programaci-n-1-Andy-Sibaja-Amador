@@ -1,4 +1,5 @@
 #include "Gameboard.h"
+using namespace std;
 
 //constructor, creates the dynamic matrix and randomizes it's content with NormalGems ----------------------------------------------------------------------------------------------------------------------------
 Gameboard::Gameboard(RenderWindow& window) {
@@ -185,49 +186,20 @@ bool** Gameboard::detectmatches(Gem*** board) {
 	return fakeboard;
 }
 
+bool** Gameboard::detectmatcheswithbombs(Gem*** board)
+{
+	bool** fakeboard;
+	fakeboard = detectmatches(board);
+	bomber(fakeboard);
+	return fakeboard;
+}
+
 // this function deletes matches on the board and returns true if matches were found ----------------------------------------------------------------------------------------------------------------------------
 bool Gameboard::deletematches() {
 	bool** fakeboard = detectmatches(board);
 	int i, j;
 	resetxy12();
-	bool R1, R2, R3, R4;
-	for (int i = 0; i < 8; i++) {
-		for (int j = 0; j < 8; j++) {
-			R1 = false, R2 = false, R3 = false, R4 = false;
-			if (board[i][j] != nullptr) {
-				if (board[i][j]->getgemtype() == 6) {
-					cout << "KABOOOM!!!!!!" << endl;
-
-					if (i > 0 && i<7 && j > 0 && j<7){
-						if (fakeboard[i + 1][j] == true || fakeboard[i][j - 1] == true || fakeboard[i][j + 1] == true) {
-
-							fakeboard[i][j] = true;
-							fakeboard[i + 1][j] = true;
-							fakeboard[i + 1][j + 1] = true;
-							fakeboard[i + 1][j - 1] = true;
-							fakeboard[i - 1][j] = true; }
-							fakeboard[i - 1][j + 1] = true;
-							fakeboard[i - 1][j - 1] = true;
-							fakeboard[i][j - 1] = true;
-							fakeboard[i][j + 1] = true;
-						}
-					}// to fix later
-				/*
-				else {
-					fakeboard[i][j] = true;
-					if (i != 7) { fakeboard[i + 1][j] = true; }
-					if (i != 7 && j != 7) { fakeboard[i + 1][j + 1] = true; }
-					if (i != 7 && j != 0) { fakeboard[i + 1][j - 1] = true; }
-					if (i != 0) { fakeboard[i - 1][j] = true; }
-					if (i != 0 && j != 7) { fakeboard[i - 1][j + 1] = true; }
-					if (i != 0 && j != 0) { fakeboard[i - 1][j - 1] = true; }
-					if (i != 0 && j != 0) { fakeboard[i][j - 1] = true; }
-					if (i != 0 && j != 7) { fakeboard[i][j + 1] = true; }
-				}*/
-			}
-			
-		}
-	}
+	
 	bool matchesfound = false;
 	for (i = 0; i < 8; i++) {
 		for (j = 0; j < 8; j++) {
@@ -236,10 +208,19 @@ bool Gameboard::deletematches() {
 			}
 		}
 	}
+
 	window->clear();
 	drawgameboard();
 	window->display();
-	this_thread::sleep_for(chrono::milliseconds(500));
+	this_thread::sleep_for(chrono::milliseconds(100));
+
+	bomber(fakeboard);
+
+	window->clear();
+	drawgameboard();
+	window->display();
+	this_thread::sleep_for(chrono::milliseconds(100));
+
 	for (i = 0; i < 8; i++) {
 		for (j = 0; j < 8; j++) {
 			if (fakeboard[i][j] == true) {
@@ -249,12 +230,61 @@ bool Gameboard::deletematches() {
 			}
 		}
 	}
-
 	window->clear();
 	drawgameboard();
 	window->display();
-	this_thread::sleep_for(chrono::milliseconds(500));
+	this_thread::sleep_for(chrono::milliseconds(100));
+	// this bit is in case gems are deleted at the top, so new ones are generated
+	generatetop();
 	return matchesfound;
+}
+//function finds bombs and checks adyecent coordinates for detected matches in a given fakeboard, then calls the Kaboom! operation
+int Gameboard::bomber(bool** fakeboard)
+{
+	try {
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (board[i][j] == nullptr) { throw 1; }// no null pointers should be on the board when this operation executes 
+				if (board[i][j]->getgemtype() == 6) {// next bit sets restrictions when checking the boarders of the board
+					bool tt = true,ml = true, mr = true,bb = true,find = false;
+					if (i == 0) {tt = false;}
+					if (i == 7) {bb = false;}
+					if (j == 0) {ml = false;}
+					if (j == 7) {mr = false;}
+					if (tt == true) { if (fakeboard[i - 1][j] == true) { find = true; } }
+					if (ml == true) { if (fakeboard[i][j - 1] == true) { find = true; } }
+					if (mr == true) { if (fakeboard[i][j + 1] == true) { find = true; } }
+					if (bb == true) { if (fakeboard[i + 1][j] == true) { find = true; } }
+					if (find == true) { kaboom(i, j, fakeboard); }
+				}
+
+			}
+		}
+	}
+	catch (int error) {
+		if (error == 1) { cout << "error in bomber function: null pointer found" << endl; }
+	}
+	return 0;
+}
+// this bit detects if a bomb is supposed to explode, destroys the gems and returns the amount;
+int Gameboard::kaboom(int row, int column, bool** fakeboard)
+{
+	int destroyedgems = 0;
+	bool tl = true, tt = true, tr = true, ml = true, mr = true, bl = true, bb = true, br = true;
+	if (row == 0) { tl = false; tt = false; tr = false; }
+	if (row == 7) { bl = false; bb = false; br = false; }
+	if (column == 0) { tl = false; ml = false; bl = false; }
+	if (column == 7) { tr = false; mr = false; br = false; }
+	destroyedgems++; fakeboard[row][column] = true;
+	if (tl == true) { destroyedgems++; fakeboard[row - 1][column - 1] = true; board[row - 1][column - 1]->select(); }
+	if (tt == true) { destroyedgems++; fakeboard[row - 1][column] = true; board[row - 1][column]->select();}
+	if (tr == true) { destroyedgems++; fakeboard[row - 1][column + 1] = true; board[row - 1][column + 1]->select();}
+	if (ml == true) { destroyedgems++; fakeboard[row][column - 1] = true; board[row][column - 1]->select();}
+	if (mr == true) { destroyedgems++; fakeboard[row][column + 1] = true; board[row][column + 1]->select();}
+	if (bl == true) { destroyedgems++; fakeboard[row + 1][column - 1] = true; board[row + 1][column - 1]->select();}
+	if (bb == true) { destroyedgems++; fakeboard[row + 1][column] = true; board[row + 1][column]->select();}
+	if (br == true) { destroyedgems++; fakeboard[row + 1][column + 1] = true; board[row + 1][column + 1]->select();}
+	return destroyedgems;
 }
 
 //this function takes a fakeboard and counts the amount of matches in it and returns the number ----------------------------------------------------------------------------------------------------------------------------
@@ -286,47 +316,66 @@ void Gameboard::lightup(int row, int column) {
 	window->draw(shape);
 }
 
-// this function produces the gravity effect
+// this function produces the gravity effect by cycling a operation that pulls gems down
 void Gameboard::gravity() {
 	srand((unsigned)time(0));
 	bool clean;
-
 	for (int i = 0; i < 8; i++) {//runs the gravity operation 8 times to make sure all gems have fallen to the bottom
-		clean = true;//on the start of a new run on the matrix it is assumed clean until proven otherwise
-		clean = gravitystep();// this pulls everything down once
+		clean = gravitystep2();// this pulls everything down once
 		if (clean == true) { i = 8; }// if a pass shows that there wasn't a single coodrinate with a 0, then it is clean and the operation can stop
 	}
-
 }
 
 // this function pulls everything down once, retruns true if it doesn't find anything to pull ----------------------------------------------------------------------------------------------------------------------------
 bool Gameboard::gravitystep() {
-	generatetop();
 	bool clean = true;
 		for (int i = 7; i > 0; i--) {
 			for (int j = 0; j < 8; j++) {
+				generatetop();
 				if (board[i][j] == nullptr) {
 					if (board[i - 1][j] != nullptr) {
 						if (board[i - 1][j]->getgemtype() <=6 && board[i - 1][j]->getgemtype() >= 0) {
-							generatetop();
 							board[i][j] = board[i - 1][j];
 							board[i - 1][j] = nullptr;
 							board[i][j]->setrow(i);
 							board[i][j]->setcolumn(j);
 							clean = false;
 							generatetop();
+							window->clear();
+							drawgameboard();
+							window->display();
+							this_thread::sleep_for(chrono::milliseconds(100));
 						}
 					}
 				}
 			}
-			window->clear();
-			drawgameboard();
-			window->display();
-			this_thread::sleep_for(chrono::milliseconds(100));
+			
 			
 		}
 		
 		return clean;
+}
+bool Gameboard::gravitystep2() {
+	bool clean = true;
+	for (int i = 7; i > 0; i--) {
+		for (int j = 0; j < 8; j++) {
+			if (board[i][j] == nullptr) {
+				board[i][j] = board[i - 1][j];
+				board[i - 1][j] = nullptr;
+				if (board[i][j] != nullptr) {
+					board[i][j]->setrow(i);
+					board[i][j]->setcolumn(j);
+				}
+				clean = false;
+				generatetop();
+				window->clear();
+				drawgameboard();
+				window->display();
+				this_thread::sleep_for(chrono::milliseconds(100));
+			}
+		}
+	}
+	return clean;
 }
 
 // this function generates the missing gems int he top part in a randomized manner ----------------------------------------------------------------------------------------------------------------------------
@@ -340,17 +389,15 @@ void Gameboard::generatetop() {
 			if (powergemcounter > 0 && r == 8) {
 				board[0][i] = new BombGem(0, i, window);
 				powergemcounter--;
-				window->clear();
-				drawgameboard();
-				window->display();
+				
 			}
 			else{
 				board[0][i] = new NormalGem(0, i, window);
-				window->clear();
-				drawgameboard();
-				window->display();
 			}
-			this_thread::sleep_for(chrono::milliseconds(1));
+			window->clear();
+			drawgameboard();
+			window->display();
+			this_thread::sleep_for(chrono::milliseconds(100));
 			
 		}
 	}

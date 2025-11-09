@@ -6,6 +6,7 @@ Menu::Menu()
     gameactive = false;
     menuactive = true;
     windows = nullptr;
+    G = nullptr;
 }
 
 void Menu::gamemenu(int x, int y)
