@@ -19,6 +19,8 @@ private:
 	int selrow;
 	int selcolumn;
 	Font font;
+	bool gameactive;
+	bool endgame;
 public:
 	Game(RenderWindow& window);
 	// draws score and moves ----------------------------------------------------------------------------------------------------------------------------
@@ -31,6 +33,15 @@ public:
 	void icegame();
 	// this function orders the destrcution of gems ----------------------------------------------------------------------------------------------------------------------------
 	int gemdestroyer();
+	//ment for communication with the menu
+	void setgameactive(bool b);
+	//ment for communication with the menu
+	bool getgameactive();
+	void clean_game();
+	bool endgamer();
+	int getscore();
+	void fast_game();
+	void reset_game();
 	//destructor ----------------------------------------------------------------------------------------------------------------------------
 	~Game();
 };

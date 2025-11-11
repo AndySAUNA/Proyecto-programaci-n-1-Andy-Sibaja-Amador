@@ -148,10 +148,8 @@ void Gameboard::randomizegameboard() {
 	}
 	catch (int error) {
 		if (error == 1) { cout << "error while randomizing game board, Board not initialized" << endl; }
-		if (error == 1) { cout << "error while randomizing game board, Board not properly initialized, series of pointer arrays missing" << endl; }
+		if (error == 2) { cout << "error while randomizing game board, Board not properly initialized, series of pointer arrays missing" << endl; }
 	}
-	
-
 }
 
 //this function detects mathces on the board ----------------------------------------------------------------------------------------------------------------------------
@@ -219,7 +217,7 @@ bool Gameboard::deletematches() {
 	window->clear();
 	drawgameboard();
 	window->display();
-	this_thread::sleep_for(chrono::milliseconds(100));
+	this_thread::sleep_for(chrono::milliseconds(500));
 
 	for (i = 0; i < 8; i++) {
 		for (j = 0; j < 8; j++) {
@@ -276,6 +274,7 @@ int Gameboard::kaboom(int row, int column, bool** fakeboard)
 	if (column == 0) { tl = false; ml = false; bl = false; }
 	if (column == 7) { tr = false; mr = false; br = false; }
 	destroyedgems++; fakeboard[row][column] = true;
+	board[row][column]->select();
 	if (tl == true) { destroyedgems++; fakeboard[row - 1][column - 1] = true; board[row - 1][column - 1]->select(); }
 	if (tt == true) { destroyedgems++; fakeboard[row - 1][column] = true; board[row - 1][column]->select();}
 	if (tr == true) { destroyedgems++; fakeboard[row - 1][column + 1] = true; board[row - 1][column + 1]->select();}
@@ -321,7 +320,7 @@ void Gameboard::gravity() {
 	srand((unsigned)time(0));
 	bool clean;
 	for (int i = 0; i < 8; i++) {//runs the gravity operation 8 times to make sure all gems have fallen to the bottom
-		clean = gravitystep2();// this pulls everything down once
+		clean = gravitystep();// this pulls everything down once
 		if (clean == true) { i = 8; }// if a pass shows that there wasn't a single coodrinate with a 0, then it is clean and the operation can stop
 	}
 }
@@ -329,49 +328,25 @@ void Gameboard::gravity() {
 // this function pulls everything down once, retruns true if it doesn't find anything to pull ----------------------------------------------------------------------------------------------------------------------------
 bool Gameboard::gravitystep() {
 	bool clean = true;
-		for (int i = 7; i > 0; i--) {
-			for (int j = 0; j < 8; j++) {
-				generatetop();
-				if (board[i][j] == nullptr) {
-					if (board[i - 1][j] != nullptr) {
-						if (board[i - 1][j]->getgemtype() <=6 && board[i - 1][j]->getgemtype() >= 0) {
-							board[i][j] = board[i - 1][j];
-							board[i - 1][j] = nullptr;
-							board[i][j]->setrow(i);
-							board[i][j]->setcolumn(j);
-							clean = false;
-							generatetop();
-							window->clear();
-							drawgameboard();
-							window->display();
-							this_thread::sleep_for(chrono::milliseconds(100));
-						}
-					}
-				}
-			}
-			
-			
-		}
-		
-		return clean;
-}
-bool Gameboard::gravitystep2() {
-	bool clean = true;
 	for (int i = 7; i > 0; i--) {
 		for (int j = 0; j < 8; j++) {
 			if (board[i][j] == nullptr) {
-				board[i][j] = board[i - 1][j];
-				board[i - 1][j] = nullptr;
-				if (board[i][j] != nullptr) {
-					board[i][j]->setrow(i);
-					board[i][j]->setcolumn(j);
+				if (board[i - 1][j] != nullptr) {
+					if (board[i - 1][j]->getgemtype() != 7) {
+						board[i][j] = board[i - 1][j];
+						board[i - 1][j] = nullptr;
+						if (board[i][j] != nullptr) {
+							board[i][j]->setrow(i);
+							board[i][j]->setcolumn(j);
+						}
+						clean = false;
+						generatetop();
+						window->clear();
+						drawgameboard();
+						window->display();
+						this_thread::sleep_for(chrono::milliseconds(100));
+					}
 				}
-				clean = false;
-				generatetop();
-				window->clear();
-				drawgameboard();
-				window->display();
-				this_thread::sleep_for(chrono::milliseconds(100));
 			}
 		}
 	}

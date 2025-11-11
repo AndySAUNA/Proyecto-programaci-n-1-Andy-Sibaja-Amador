@@ -48,7 +48,6 @@ public:
 	void gravity();
 	// this function pulls everythin once ----------------------------------------------------------------------------------------------------------------------------
 	bool gravitystep();
-	bool gravitystep2();
 	// this function generates the missing gems int he top part in a randomized manner ----------------------------------------------------------------------------------------------------------------------------
 	void generatetop();
 	//unrefranced, must consider deleting ----------------------------------------------------------------------------------------------------------------------------

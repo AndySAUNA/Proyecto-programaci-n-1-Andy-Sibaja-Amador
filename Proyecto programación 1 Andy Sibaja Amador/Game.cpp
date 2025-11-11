@@ -1,6 +1,7 @@
 #include "Game.h"
 
 Game::Game(RenderWindow& window) {
+	endgame = false;
 	selrow = 8;
 	selcolumn = 8;
 	score = 0;
@@ -10,6 +11,7 @@ Game::Game(RenderWindow& window) {
 	gboard->randomizegameboard();
 	firstselect = true;
 	font.loadFromFile("resources/fonts/OpenSans-Regular.ttf");
+	gameactive = false;
 }
 
 // draws score and moves ----------------------------------------------------------------------------------------------------------------------------
@@ -81,7 +83,7 @@ void Game::select(int row, int column) {
 					selcolumn = 8;
 					firstselect = true;
 					gboard->resetxy12();
-
+					if (moves <= 0) { endgame = true; gameactive = false; }
 				}
 				else { // this bit resets the selection if the move is invalid
 					cout << "gboard->checkvalidmove2() check failed" << endl;
@@ -145,6 +147,42 @@ int Game::gemdestroyer() {
 		this_thread::sleep_for(chrono::milliseconds(100));
 	}
 	return destroyedgems;
+}
+
+void Game::setgameactive(bool b)
+{
+	gameactive = b;
+}
+
+bool Game::getgameactive()
+{
+	return gameactive;
+}
+
+void Game::clean_game()
+{
+}
+
+bool Game::endgamer()
+{
+	return endgame;
+}
+
+int Game::getscore()
+{
+	return score;
+}
+
+void Game::fast_game()
+{
+	moves = 5;
+}
+
+void Game::reset_game()
+{
+	gboard->randomizegameboard();
+	score = 0;
+	moves = 20;
 }
 
 //destructor ----------------------------------------------------------------------------------------------------------------------------

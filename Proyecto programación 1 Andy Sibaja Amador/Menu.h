@@ -20,6 +20,7 @@ public:
 	void gamemenu(int x,int y);
 	void Gameloop();
 	void draw_Menu();
+	void draw_end();
 
 };
 
