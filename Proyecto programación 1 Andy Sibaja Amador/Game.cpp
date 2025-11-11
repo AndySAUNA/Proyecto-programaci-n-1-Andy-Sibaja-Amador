@@ -185,6 +185,11 @@ void Game::reset_game()
 	moves = 20;
 }
 
+void Game::setendgame()
+{
+	endgame = false;
+}
+
 //destructor ----------------------------------------------------------------------------------------------------------------------------
 Game::~Game() {
 	delete gboard;

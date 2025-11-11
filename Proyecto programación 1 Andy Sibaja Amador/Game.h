@@ -42,6 +42,7 @@ public:
 	int getscore();
 	void fast_game();
 	void reset_game();
+	void setendgame();
 	//destructor ----------------------------------------------------------------------------------------------------------------------------
 	~Game();
 };

@@ -4,6 +4,7 @@ using namespace std;
 //constructor, creates the dynamic matrix and randomizes it's content with NormalGems ----------------------------------------------------------------------------------------------------------------------------
 Gameboard::Gameboard(RenderWindow& window) {
 	srand((unsigned)time(0));
+	t = 0;
 	row1 = 8;
 	column1 = 8;
 	row2 = 8;
@@ -368,6 +369,10 @@ void Gameboard::generatetop() {
 			}
 			else{
 				board[0][i] = new NormalGem(0, i, window);
+				while (t == board[0][i]->getgemtype()) {
+					board[0][i]->setgemtype(rand() % 5 + 1);
+				}
+				t=board[0][i]->getgemtype();
 			}
 			window->clear();
 			drawgameboard();

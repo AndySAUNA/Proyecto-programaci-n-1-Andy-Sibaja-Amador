@@ -20,7 +20,7 @@ void Menu::gamemenu(int x, int y)
             if (x > 90 && x < (90 + 230) && y > 390 && y < (390 + 50)) { G->reset_game(); G->fast_game(); G->setgameactive(true); }
         }
         else {
-            if (x > 90 && x < (90 + 220) && y > 190 && y < (190 + 50)) { G->reset_game(); G->setgameactive(true); }
+            if (x > 90 && x < (90 + 220) && y > 290 && y < (290 + 50)) { G->reset_game(); G->setendgame(); }
         }
     }
     
@@ -169,7 +169,15 @@ void Menu::draw_Menu()
 
 void Menu::draw_end()
 {
-    //writes welcome
+    windows->clear(Color::Blue);
+    //draws the square behind the end game text
+    RectangleShape rect1(Vector2f(220.f, 50.f));
+    rect1.setFillColor(Color::Black);
+    rect1.setOutlineColor(Color::Red);
+    rect1.setOutlineThickness(5.f);
+    rect1.setPosition(Vector2f((100 - 10), (100 - 10)));
+    windows->draw(rect1);
+    //writes end of game
     Text text1;
     text1.setFont(font);
     text1.setString("end of game!");
@@ -177,14 +185,14 @@ void Menu::draw_end()
     text1.setFillColor(Color::White);
     text1.setPosition(100.f, 100.f);
     windows->draw(text1);
-    //draws square for normal game button
-    RectangleShape rect1(Vector2f(220.f, 50.f));
-    rect1.setFillColor(Color::Black);
-    rect1.setOutlineColor(Color::Red);
-    rect1.setOutlineThickness(5.f);
-    rect1.setPosition(Vector2f((100 - 10), (200 - 10)));
-    windows->draw(rect1);
-    //writes welcome
+    //draws square behind the score
+    RectangleShape rect2(Vector2f(220.f, 50.f));
+    rect2.setFillColor(Color::Black);
+    rect2.setOutlineColor(Color::Red);
+    rect2.setOutlineThickness(5.f);
+    rect2.setPosition(Vector2f((100 - 10), (200 - 10)));
+    windows->draw(rect2);
+    //writes the score
     Text text2;
     text2.setFont(font);
     text2.setString("score: " + G->getscore());
@@ -192,11 +200,20 @@ void Menu::draw_end()
     text2.setFillColor(Color::White);
     text2.setPosition(100.f, 200.f);
     windows->draw(text2);
-    //draws square for normal game button
-    RectangleShape rect2(Vector2f(220.f, 50.f));
-    rect2.setFillColor(Color::Black);
-    rect2.setOutlineColor(Color::Red);
-    rect2.setOutlineThickness(5.f);
-    rect2.setPosition(Vector2f((100 - 10), (200 - 10)));
-    windows->draw(rect2);
+    // draws the square behind the return to menu button
+    RectangleShape rect3(Vector2f(220.f, 50.f));
+    rect3.setFillColor(Color::Black);
+    rect3.setOutlineColor(Color::Red);
+    rect3.setOutlineThickness(5.f);
+    rect3.setPosition(Vector2f((100 - 10), (300 - 10)));
+    windows->draw(rect3);
+    //writes the return to menu button
+    Text text3;
+    text3.setFont(font);
+    text3.setString("return to menu");
+    text3.setCharacterSize(24);
+    text3.setFillColor(Color::White);
+    text3.setPosition(100.f, 300.f);
+    windows->draw(text3);
+   
 }
