@@ -11,14 +11,12 @@ void NormalGem::draw(int column, int row){
 	try {
 		if (window == nullptr) { throw 1; }
 	if (selected == true) {
-		/*
 		Texture texture;
-		if (!texture.loadFromFile("resources\\red (1).JPG")) { throw 2; }
+		if (!texture.loadFromFile("resources\\red glow 70.png")) { throw 2; }
 		Sprite backgroundSprite;
 		backgroundSprite.setTexture(texture);
 		backgroundSprite.setPosition(column + 1.f, row + 1.f);
 		window->draw(backgroundSprite);
-		*/
 	}
 	
 		if (gemtype == 1) {

@@ -153,6 +153,7 @@
     <Font Include="resources\fonts\OpenSans-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="resources\back to menu 100.png" />
     <Image Include="resources\box grid 600.png" />
     <Image Include="resources\end screen 800x600.png" />
     <Image Include="resources\gem 1 70.png" />

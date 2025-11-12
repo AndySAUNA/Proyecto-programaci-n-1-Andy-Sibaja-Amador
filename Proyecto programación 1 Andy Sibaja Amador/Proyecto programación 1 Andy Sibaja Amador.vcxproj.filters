@@ -105,5 +105,8 @@
     <Image Include="resources\red (1).JPG">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="resources\back to menu 100.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -36,6 +36,8 @@ Gameboard::Gameboard(RenderWindow& window) {
 
 //this function draws the gameboard on the window ----------------------------------------------------------------------------------------------------------------------------
 void Gameboard::drawgameboard() {
+
+
 	RectangleShape rect(Vector2f(70.f, 70.f));
 	rect.setOutlineColor(Color::Black);
 	rect.setOutlineThickness(5.f);
@@ -49,8 +51,15 @@ void Gameboard::drawgameboard() {
 		if (!backgroundTexture.loadFromFile("resources\\box grid 600.png")) { throw 2; }
 		Sprite backgroundSprite;
 		backgroundSprite.setTexture(backgroundTexture);
-		backgroundSprite.setPosition(195, 0);
+		backgroundSprite.setPosition(200, 0);
 		window->draw(backgroundSprite);
+
+		Texture Texture;
+		if (!Texture.loadFromFile("resources\\back to menu 100.png")) { throw 2; }
+		Sprite Sprite;
+		Sprite.setTexture(Texture);
+		Sprite.setPosition(50, 200);
+		window->draw(Sprite);
 
 		if (row1 < 0 && column1 < 0 && row1 > 8 && column1 > 8 && row2 < 0 && column2 < 0 && row2 > 8 && column2 > 8) { throw 1; }
 		if (row1 >= 0 && column1 >= 0 && row1 < 8 && column1 < 8 && row2 >= 0 && column2 >= 0 && row2 < 8 && column2 < 8) { if (board[row1][column1] == nullptr) { throw 2; } }

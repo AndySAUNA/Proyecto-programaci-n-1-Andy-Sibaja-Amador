@@ -23,6 +23,7 @@ void Menu::gamemenu(int x, int y)
             if (x > 225 && x < (575) && y > 470 && y < (545)) { G->reset_game(); G->fast_game(); G->setgameactive(true); }
         }
         else {
+            // for endscreen
             if (x > 210 && x < (580) && y > 420 && y < (530)) {G->setendgame(); }
         }
     }
@@ -91,7 +92,7 @@ void Menu::Gameloop()
                         game.select(row, column);
                     }
                     else {
-                        if (rowclick < 50) {
+                        if (rowclick > 200 && rowclick < 235 && columnclick > 50 && columnclick < 150) {
                             game.gameend();
                             game.setgameactive(false);
                             game.reset_game();
