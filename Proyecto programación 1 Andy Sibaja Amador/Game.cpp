@@ -44,7 +44,7 @@ void Game::drawgame() {
 // select function does the selecction process and iniciates moves ----------------------------------------------------------------------------------------------------------------------------
 void Game::select(int row, int column) {
 	try {
-		if ((row < 0 && column < 0) && (row > 8 && column > 8)) { throw 1; }
+		if ((row < 0 && column < 0) && (row > 7 && column > 7)) { throw 1; }
 
 		gboard->conprintboard();
 		if (row == selrow && column == selcolumn) {//if the same gem position is selected again, it deselects it
@@ -190,6 +190,10 @@ void Game::fast_game()
 
 void Game::reset_game()
 {
+	selrow = 8;
+	selcolumn = 8;
+	firstselect = false;
+	gboard->resetxy12();
 	gboard->randomizegameboard();
 	score = 0;
 	moves = 20;

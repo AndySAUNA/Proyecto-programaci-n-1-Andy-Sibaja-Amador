@@ -6,6 +6,7 @@ public:
 	IceGem();
 	IceGem(int row, int column, RenderWindow* window) : Gem(row, column, window) {}
 	void draw(int column, int row);
+	int getgemtype() { return 7; }
 	~IceGem();
 };
 

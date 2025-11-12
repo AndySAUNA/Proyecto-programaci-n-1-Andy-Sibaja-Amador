@@ -108,5 +108,8 @@
     <Image Include="resources\back to menu 100.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="resources\gem 7 70.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

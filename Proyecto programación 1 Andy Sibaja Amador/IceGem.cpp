@@ -5,7 +5,18 @@ IceGem::IceGem()
 	gemtype = 7;
 }
 void IceGem::draw(int column, int row) {
-
+	try {
+		Texture texture;
+		if (!texture.loadFromFile("resources\\gem 7 70.png")) { throw 1; }
+		Sprite backgroundSprite;
+		backgroundSprite.setTexture(texture);
+		backgroundSprite.setPosition(column, row);
+		window->draw(backgroundSprite);
+	}
+	catch (int error) {
+		if (error == 1) { cout << "error opening main menu texture" << endl; }
+	}
+	/*
 	RectangleShape rect(Vector2f(70.f, 70.f));
 	Color test(211, 211, 211);
 	rect.setFillColor(test);
@@ -21,6 +32,7 @@ void IceGem::draw(int column, int row) {
 
 	window->draw(rect);
 	window->draw(rect2);
+	*/
 }
 
 IceGem::~IceGem()

@@ -129,19 +129,9 @@ void Gameboard::resetxy12() {
 // this function randomizes the gems on the board  only to NormalGem, if there is another child class of Gem, it will be deleted and replaced----------------------------------------------------------------------------------------------------------------------------
 void Gameboard::randomizegameboard() {
 	int i, j;
-	
+	powergemcounter = 0;
 	srand((unsigned)time(0));
-	for (i = 0; i < 8; i++) {
-		for (j = 0; j < 8; j++) {
-			if (board[i][j]->getgemtype() == 6 || board[i][j]->getgemtype() == 7) { 
-				delete board[i][j]; 
-				board[i][j] = new NormalGem; 
-			}
-			else {
-				board[i][j]->setgemtype(rand() % 5 + 1);
-			}
-		}
-	}
+	
 	try {
 		if (board == nullptr) { throw 1; }
 		for (int i = 0; i < 8; i++) {
@@ -150,11 +140,15 @@ void Gameboard::randomizegameboard() {
 		for (i = 0; i < 8; i++) {
 			for (j = 0; j < 8; j++) {
 				if (board[i][j] == nullptr) {
-					board[i][j] = new NormalGem;
+					board[i][j] = new NormalGem(i, j, window);
 				}
-				else if (board[i][j]->getgemtype() == 6 || board[i][j]->getgemtype() == 7) {
+				else if (board[i][j]->getgemtype() == 6) {
 					delete board[i][j];
-					board[i][j] = new NormalGem;
+					board[i][j] = new NormalGem(i, j, window);
+				}
+				else if (board[i][j]->getgemtype() == 7) {
+					delete board[i][j];
+					board[i][j] = new NormalGem(i, j, window);
 				}
 			}
 		}
@@ -432,7 +426,6 @@ bool Gameboard::checkadyasent(int x1, int y1, int x2, int y2) {
 
 //this function checks valid move and returns true or false ----------------------------------------------------------------------------------------------------------------------------
 bool Gameboard::checkvalidmove1(int x1, int y1, int x2, int y2) {
-
 	cout << "valid move test 0" << endl;
 	if (x1 >= 0 && x1 <= 7 && y1 >= 0 && y1 <= 7 && x2 >= 0 && x2 <= 7 && y2 >= 0 && y2 <= 7) {
 		cout << "valid move test 1" << endl;
@@ -496,6 +489,10 @@ bool Gameboard::checkvalidmove2() {
 			cout << std::endl;
 		}
 		//this part swaps the gems in the temporary board
+		if (temp[row1][column1]->getgemtype() == 7 || temp[row2][column2]->getgemtype() == 7) {
+			cout << "can't select a ice cube" << endl;
+			return false;
+		}
 		Gem* t1 = temp[row1][column1];
 		Gem* t2 = temp[row2][column2];
 		temp[row1][column1] = t2;

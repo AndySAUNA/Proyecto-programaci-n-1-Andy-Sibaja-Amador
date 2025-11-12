@@ -26,7 +26,7 @@ public:
 	void setcolumn(int column) { this->column = column; }
 	int getcolumn() { return column; }
 	void setgemtype(int gemtype) { this->gemtype = gemtype; }
-	int getgemtype() { return gemtype; }
+	virtual int getgemtype() = 0;
 	// this function draws a gem based on its type and position;
 	virtual void draw(int column, int row) = 0;
 	void draw_on_grid();
