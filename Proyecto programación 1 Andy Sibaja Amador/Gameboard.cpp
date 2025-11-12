@@ -43,9 +43,15 @@ void Gameboard::drawgameboard() {
 	rect.setFillColor(test);
 	float dcolumn;
 	float drow;
-	
 
 	try {
+		Texture backgroundTexture;
+		if (!backgroundTexture.loadFromFile("resources\\box grid 600.png")) { throw 2; }
+		Sprite backgroundSprite;
+		backgroundSprite.setTexture(backgroundTexture);
+		backgroundSprite.setPosition(195, 0);
+		window->draw(backgroundSprite);
+
 		if (row1 < 0 && column1 < 0 && row1 > 8 && column1 > 8 && row2 < 0 && column2 < 0 && row2 > 8 && column2 > 8) { throw 1; }
 		if (row1 >= 0 && column1 >= 0 && row1 < 8 && column1 < 8 && row2 >= 0 && column2 >= 0 && row2 < 8 && column2 < 8) { if (board[row1][column1] == nullptr) { throw 2; } }
 		if (row1 >= 0 && column1 >= 0 && row1 < 8 && column1 < 8 && row2 >= 0 && column2 >= 0 && row2 < 8 && column2 < 8) { if (board[row1][column1] == nullptr || board[row2][column2] == nullptr) { throw 3; } }
@@ -114,7 +120,19 @@ void Gameboard::resetxy12() {
 // this function randomizes the gems on the board  only to NormalGem, if there is another child class of Gem, it will be deleted and replaced----------------------------------------------------------------------------------------------------------------------------
 void Gameboard::randomizegameboard() {
 	int i, j;
+	
 	srand((unsigned)time(0));
+	for (i = 0; i < 8; i++) {
+		for (j = 0; j < 8; j++) {
+			if (board[i][j]->getgemtype() == 6 || board[i][j]->getgemtype() == 7) { 
+				delete board[i][j]; 
+				board[i][j] = new NormalGem; 
+			}
+			else {
+				board[i][j]->setgemtype(rand() % 5 + 1);
+			}
+		}
+	}
 	try {
 		if (board == nullptr) { throw 1; }
 		for (int i = 0; i < 8; i++) {

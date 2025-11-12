@@ -38,8 +38,10 @@ public:
 	//ment for communication with the menu
 	bool getgameactive();
 	void clean_game();
+	void gameend();
 	bool endgamer();
 	int getscore();
+	string getstat();
 	void fast_game();
 	void reset_game();
 	void setendgame();

@@ -68,4 +68,42 @@
       <Filter>Resource Files</Filter>
     </Font>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\main menu background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\Gem 3 70.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\gem 4 70.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\gem 5 70.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\gem 2 70.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\gem 1 70.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\box grid 600.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\gem 6 70.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\end screen 800x600.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\red glow 70.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\red.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\red (1).JPG">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

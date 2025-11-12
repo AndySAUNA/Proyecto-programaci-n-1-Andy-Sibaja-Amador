@@ -163,6 +163,11 @@ void Game::clean_game()
 {
 }
 
+void Game::gameend()
+{
+	endgame = false;
+}
+
 bool Game::endgamer()
 {
 	return endgame;
@@ -171,6 +176,11 @@ bool Game::endgamer()
 int Game::getscore()
 {
 	return score;
+}
+
+string Game::getstat()
+{
+	return to_string(getscore()*10);
 }
 
 void Game::fast_game()

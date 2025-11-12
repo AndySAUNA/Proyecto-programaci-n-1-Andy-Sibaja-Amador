@@ -15,12 +15,15 @@ void Menu::gamemenu(int x, int y)
         if (windows == nullptr) { throw 1; }
         if (G == nullptr) { throw 2; }
         if (G->endgamer() == false) {
-            if (x > 90 && x < (90 + 220) && y > 190 && y < (190 + 50)) { G->reset_game(); G->setgameactive(true); }
-            if (x > 90 && x < (90 + 230) && y > 290 && y < (290 + 50)) { G->reset_game(); G->icegame(); G->setgameactive(true); }
-            if (x > 90 && x < (90 + 230) && y > 390 && y < (390 + 50)) { G->reset_game(); G->fast_game(); G->setgameactive(true); }
+            //normal game button
+            if (x > 225 && x < (575) && y > 250 && y < (330)) { G->reset_game(); G->setgameactive(true); }
+            //ice game button
+            if (x > 225 && x < (575) && y > 360 && y < (440)) { G->reset_game(); G->icegame(); G->setgameactive(true); }
+            //fastgame button
+            if (x > 225 && x < (575) && y > 470 && y < (545)) { G->reset_game(); G->fast_game(); G->setgameactive(true); }
         }
         else {
-            if (x > 90 && x < (90 + 220) && y > 290 && y < (290 + 50)) { G->reset_game(); G->setendgame(); }
+            if (x > 210 && x < (580) && y > 420 && y < (530)) {G->setendgame(); }
         }
     }
     
@@ -87,6 +90,13 @@ void Menu::Gameloop()
                         cout << "posrc is:" << row << "," << column << endl;
                         game.select(row, column);
                     }
+                    else {
+                        if (rowclick < 50) {
+                            game.gameend();
+                            game.setgameactive(false);
+                            game.reset_game();
+                    }
+                    }
                     mouseButtonPressed = false; // Reset the flag
 
                 }
@@ -110,6 +120,19 @@ void Menu::Gameloop()
 
 void Menu::draw_Menu()
 {
+    try {
+        Texture backgroundTexture;
+        if (!backgroundTexture.loadFromFile("resources\\main menu background.png")) { throw 1;}
+        Sprite backgroundSprite;
+        backgroundSprite.setTexture(backgroundTexture);
+        backgroundSprite.setPosition(0, 0);
+        windows->clear(sf::Color::Black);
+        windows->draw(backgroundSprite);
+    }
+    catch (int error) {
+        if (error == 1) { cout << "error opening main menu texture" << endl; }
+    }
+    /*
     windows->clear(Color::Blue);
     //writes welcome
     Text text1;
@@ -164,11 +187,32 @@ void Menu::draw_Menu()
     text4.setFillColor(Color::White);
     text4.setPosition(100.f, 400.f);
     windows->draw(text4);
-
+    */
 }
 
 void Menu::draw_end()
 {
+    try {
+        Texture backgroundTexture;
+        if (!backgroundTexture.loadFromFile("resources\\end screen 800x600.png")) { throw 1; }
+        Sprite backgroundSprite;
+        backgroundSprite.setTexture(backgroundTexture);
+        backgroundSprite.setPosition(0, 0);
+        windows->clear(sf::Color::Black);
+        windows->draw(backgroundSprite);
+        //writes the score
+        Text text2;
+        text2.setFont(font);
+        text2.setString(G->getstat());
+        text2.setCharacterSize(40);
+        text2.setFillColor(Color::White);
+        text2.setPosition(350.f, 270.f);
+        windows->draw(text2);
+    }
+    catch (int error) {
+        if (error == 1) { cout << "error opening main menu texture" << endl; }
+    }
+    /*
     windows->clear(Color::Blue);
     //draws the square behind the end game text
     RectangleShape rect1(Vector2f(220.f, 50.f));
@@ -195,7 +239,7 @@ void Menu::draw_end()
     //writes the score
     Text text2;
     text2.setFont(font);
-    text2.setString("score: " + G->getscore());
+    text2.setString(G->getstat());
     text2.setCharacterSize(24);
     text2.setFillColor(Color::White);
     text2.setPosition(100.f, 200.f);
@@ -215,5 +259,7 @@ void Menu::draw_end()
     text3.setFillColor(Color::White);
     text3.setPosition(100.f, 300.f);
     windows->draw(text3);
+    */
+    
    
 }
