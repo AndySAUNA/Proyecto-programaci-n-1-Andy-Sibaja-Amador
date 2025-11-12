@@ -2440,12 +2440,46 @@
 											"height": 13,
 											"text": "+Game* G",
 											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAGadqkVQ3T7M/w=",
+											"_parent": {
+												"$ref": "AAAAAAGab3M4OS5cwM8="
+											},
+											"model": {
+												"$ref": "AAAAAAGadqkVO3T1IUk="
+											},
+											"font": "Arial;13;0",
+											"left": 5,
+											"top": 75,
+											"width": 294,
+											"height": 13,
+											"text": "+gameactive: bool",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAGadqk69HXI2NA=",
+											"_parent": {
+												"$ref": "AAAAAAGab3M4OS5cwM8="
+											},
+											"model": {
+												"$ref": "AAAAAAGadqk67nXCkfM="
+											},
+											"font": "Arial;13;0",
+											"left": 5,
+											"top": 90,
+											"width": 294,
+											"height": 13,
+											"text": "+menuactive: bool",
+											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
 									"top": 25,
 									"width": 304,
-									"height": 53
+									"height": 83
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -2468,7 +2502,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 5,
-											"top": 83,
+											"top": 113,
 											"width": 294,
 											"height": 13,
 											"text": "+Menu()",
@@ -2485,7 +2519,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 5,
-											"top": 98,
+											"top": 128,
 											"width": 294,
 											"height": 13,
 											"text": "+gamemenu(int x, int y): void",
@@ -2502,7 +2536,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 5,
-											"top": 113,
+											"top": 143,
 											"width": 294,
 											"height": 13,
 											"text": "+Gameloop(): void",
@@ -2519,7 +2553,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 5,
-											"top": 128,
+											"top": 158,
 											"width": 294,
 											"height": 13,
 											"text": "+draw_menu(): void",
@@ -2536,7 +2570,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 5,
-											"top": 143,
+											"top": 173,
 											"width": 294,
 											"height": 13,
 											"text": "+draw_end(): void",
@@ -2544,7 +2578,7 @@
 										}
 									],
 									"font": "Arial;13;0",
-									"top": 78,
+									"top": 108,
 									"width": 304,
 									"height": 83
 								},
@@ -6656,6 +6690,24 @@
 							},
 							"name": "Game* G",
 							"type": ""
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGadqkVO3T1IUk=",
+							"_parent": {
+								"$ref": "AAAAAAGab3M4OC5Ux7Q="
+							},
+							"name": "gameactive",
+							"type": "bool"
+						},
+						{
+							"_type": "UMLAttribute",
+							"_id": "AAAAAAGadqk67nXCkfM=",
+							"_parent": {
+								"$ref": "AAAAAAGab3M4OC5Ux7Q="
+							},
+							"name": "menuactive",
+							"type": "bool"
 						}
 					],
 					"operations": [
